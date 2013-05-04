@@ -1,0 +1,29 @@
+
+@charset "UTF-8";
+/* CSS Document */
+.section { width: 500px; }
+.section .picturewrap { padding: 0  0 5px 0; }
+.section .textwrap { padding: 0  0 5px 0; }
+
+.section .span1 { width: 110px; }
+.section .span2 { width: 240px; }
+.section .span3 { width: 370px; }
+.section .span4 { width: 500px; }
+
+.section.picturefirst .picturewrap, .section.textfirst .textwrap { float: left; padding-right: 20px; }
+.section.picturefirst .textwrap, .section.textfirst .picturewrap { float: right; }
+
+.section.wrap.picturefirst .picturewrap { padding-right: 20px; }
+.section.wrap.textfirst .picturewrap { padding-left: 20px; }
+.section.wrap .textwrap { padding: 0; }
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.typography .section img {
+	border: none;
+}

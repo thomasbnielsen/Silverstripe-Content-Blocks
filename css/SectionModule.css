@@ -1,0 +1,15 @@
+#Template ul { padding-left: 20px; }
+#Template ul li { float: none; width: 100%; padding: 9px 0 9px 15px; overflow: hidden; border-bottom-width: 2px; border-bottom: 2px groove rgba(255, 255, 255, 0.8); -webkit-border-image: url(../images/textures/bg_fieldset_elements_border.png) 2 stretch stretch; border-image: url(../images/textures/bg_fieldset_elements_border.png) 2 stretch stretch; }
+#Template ul li:last-child { border-bottom: none; }
+#Template ul li:hover, #Template ul li.selected { background-color: rgba(85, 164, 210, 0.3); }
+#Template ul li.disabled { color: #aaaaaa; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); opacity: 0.5; }
+#Template ul li.disabled:hover { background: none; }
+#Template ul li input { margin: inherit; }
+#Template ul li label { padding-left: 10px; padding-bottom: 0; }
+#Template ul li input, #Template ul li label, #Template ul li .page-icon, #Template ul li .title { float: left; line-height: 1.3em; }
+#Template ul li .page-icon { margin: 0 4px; }
+
+#Template ul li .sectionIcon { }
+
+#Template ul li .title { width: 120px; font-weight: bold; padding-right: 10px; padding-left: 2px }
+#Template ul li .description { font-style: italic; display: inline; clear: none; margin: 0; }

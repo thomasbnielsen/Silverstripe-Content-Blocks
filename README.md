@@ -29,11 +29,14 @@ Tested on Silverstripe 3.1 beta3
 - The module will copy sections/templates/SectionTemplates to themes/your_design/templates/SectionTemplates, should this fail, please copy the files manually.
 - The module will copy sections/css/sections.css to themes/your_design/sections.css, should this fail, please copy the file manually.
 
-Usage:
+### Usage: ###
 - add your own templates to themes/your_design/templates/SectionTemplates, they need to have the extension .ss
 - allways run dev/build?flush=1 after adding templates
 - remember to ?flush=1 after modification of templates
 
-TODO:
-	Option to add more content placeholders without coding - site config?
-	Build in template generator
+### TODO: ###
+- Save available templates in database (enum field) - create on dev/build
+- Make inline editing of sections work (edit name, template, active - show id, picture, DO Type)
+- Option to add more content placeholders without coding - site config?
+- Build in template generator
+- Create a set of percentage width based SectionTemplates

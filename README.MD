@@ -1,3 +1,8 @@
+Silverstripe Section Module
+===========
+
+Split your page content into manageable sections/blocks, each with their own template.
+
 ### Installation instructions ###
 
 - Put this module under the root folder of site, named sectionmodule.

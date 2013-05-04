@@ -3,6 +3,9 @@ Silverstripe-Section-Module
 
 Split your page content into manageable sections/blocks of content, each with their own template.
 
+### Version compatibility ###
+Tested on Silverstripe 3.1 beta3
+
 ### Installation instructions ###
 
 - Put this module under the root folder of site, named sectionmodule.

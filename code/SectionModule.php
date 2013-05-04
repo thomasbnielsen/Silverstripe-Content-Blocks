@@ -99,8 +99,15 @@ class SectionModule extends DataExtension {
 	
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
-		// Run on dev buld		
+		// Run on dev buld
 		
+		// Test if we have required dependencies, maybe we could add some of this as options. Test if installed, else just use basic GridField
+		if (!class_exists('GridFieldExtensions')) {
+			exit('<li style="color: red">The GridField Extension module by ajshort is required: https://github.com/ajshort/silverstripe-gridfieldextensions</li>');
+		}
+		if (!class_exists('GridFieldCopyButton')) {
+			exit('<li style="color: red">The GridField Copy Button module is required: https://github.com/uniun/silverstripe-copybutton</li>');
+		}
 		// If css file does not exist on current theme, copy from module
 		$copyfrom = BASE_PATH . "/sectionmodule/css/section.css";
 		$theme = SSViewer::current_theme();
@@ -114,7 +121,6 @@ class SectionModule extends DataExtension {
 				echo "The default css file was not found: " . $copyfrom;
 			}
 		}
-	
 	}	
 	
 	

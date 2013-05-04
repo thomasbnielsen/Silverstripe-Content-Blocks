@@ -82,7 +82,7 @@ class SectionModule extends DataExtension {
 */		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 		
-		if (count($classes) > 1 && class_exists(GridFieldAddNewMultiClass)) {
+		if (count($classes) > 1 && class_exists('GridFieldAddNewMultiClass')) {
 			$gridFieldConfig->removeComponentsByType('GridFieldAddNewButton');
 			$gridFieldConfig->addComponent(new GridFieldAddNewMultiClass());
 		}

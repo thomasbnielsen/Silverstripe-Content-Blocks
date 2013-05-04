@@ -1,10 +1,11 @@
-<div class="section item{$Pos}">
+<div class="section clearfix textfirst item{$Pos}">
 	<% if $SectionHeader != "None" %><{$SectionHeader}>$Name</{$SectionHeader}><% end_if %>
-	<h2>$Name</h2>
+	<div class="textwrap span3">$SectionContent</div>
+	<div class="picturewrap span1">
 	<% if Images %>
 		<% loop Images %>
-			$CroppedImage(150,100)
+			$SetWidth(110)
 		<% end_loop %>
 	<% end_if %>
-	$SectionContent
+	</div>
 </div>

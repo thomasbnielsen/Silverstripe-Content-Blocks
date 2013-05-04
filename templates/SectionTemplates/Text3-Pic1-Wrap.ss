@@ -1,10 +1,10 @@
 <div class="section clearfix textfirst wrap item{$Pos}">
 <% if $SectionHeader != "None" %><{$SectionHeader}>$Name</{$SectionHeader}><% end_if %>
 <div class="textwrap">
-	<div class="picturewrap span2">
+	<div class="picturewrap span1">
 	<% if Images %>
 		<% loop Images %>
-			$SetWidth(240)
+			$SetWidth(270)
 		<% end_loop %>
 	<% end_if %>
 	</div>

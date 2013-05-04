@@ -21,7 +21,7 @@ Tested on Silverstripe 3.1 beta3
 	- silverstripe-copybutton
 	https://github.com/uniun/silverstripe-copybutton
 	
-	- Better buttons for GridField (Not required but improves usability)
+	- Better buttons for GridField by unclecheese (Not required but improves usability)
 	https://github.com/unclecheese/silverstripe-gridfield-betterbuttons
 
 - run sitename.com/dev/build?flush=all

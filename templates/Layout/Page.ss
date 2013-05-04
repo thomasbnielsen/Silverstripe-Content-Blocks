@@ -6,7 +6,7 @@
 	</article>
 	
 	<div id="Sections">
-		<% loop Sections %>
+		<% loop ActiveSections %>
 			$Me
 		<% end_loop %>
 	</div>	

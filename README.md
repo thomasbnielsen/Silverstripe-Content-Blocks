@@ -10,7 +10,10 @@ Tested on Silverstripe 3.1 beta3
 
 - Put this module under the root folder of site, named sectionmodule.
 - Copy sections/css/sections.css to themes/your_design/sections.css
-- Add the following code to your themes/your_design/templates/Layout/Page.ss where you want the content sections to be rendered:  <div id="Sections"><% loop ActiveSections %>$Me<% end_loop %></div>
+- Add the following code to your themes/your_design/templates/Layout/Page.ss where you want the content sections to be rendered:
+```
+<div id="Sections"><% loop ActiveSections %>$Me<% end_loop %></div>
+```
 
 - install the following dependent module(s)
   - GridField Extensions

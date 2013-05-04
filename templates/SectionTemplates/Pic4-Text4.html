@@ -1,0 +1,11 @@
+<div class="section clearfix picturefirst item<!--@ParapgraphContainerSort-->">
+	<div class="picturewrap span4">
+	<!--@If Defined(ParagraphImageClean)-->
+		<img src="admin/Public/GetImage.aspx?Image=<!--@ParagraphImageClean-->&Width=500" alt="<!--@ParagraphImageLinkAlt-->" />
+		<!--@If Defined(ParagraphImageText)-->
+		<span class="imagetext"><!--@ParagraphImageText--></span>
+		<!--@EndIf(ParagraphImageText)-->
+	<!--@EndIf(ParagraphImageClean)-->
+	</div>
+	<div class="textwrap span4"><!--@ParagraphText--><!--@ParagraphModule--></div>
+</div>

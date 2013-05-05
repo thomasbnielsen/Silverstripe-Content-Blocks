@@ -4,7 +4,7 @@
 	<div class="picturewrap span2">
 	<% if Images %>
 		<% loop Images %>
-			$SetWidth(220)
+			$SetWidth(240)
 		<% end_loop %>
 	<% end_if %>
 	</div>

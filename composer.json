@@ -1,0 +1,23 @@
+{
+	"name": "NobrainerWeb/Silverstripe-Section-Module",
+	"description": "Split your page content into manageable blocks/sections of content, each with their own template",
+	"type": "silverstripe-module",
+	"homepage": "https://github.com/NobrainerWeb/Silverstripe-Section-Module",
+	"keywords": ["silverstripe", "section", "sections", "blocks"],
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Thomas B. Nielsen - Nobrainer Web",
+			"email": "nobrainerweb@gmail.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/NobrainerWeb/Silverstripe-Section-Module/issues"
+	},
+	"require": {
+		"silverstripe/framework": ">=3.1"
+	},
+	"extra": {
+		"installer-name": "sectionmodule"
+	}
+}

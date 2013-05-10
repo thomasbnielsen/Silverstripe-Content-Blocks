@@ -65,13 +65,17 @@ class Section extends DataObject {
 		if(file_exists($src)) {
 			foreach (glob($src . "*.ss") as $filename) {	
 				$name = $this->file_ext_strip(basename($filename));
-				$html = '<span class="page-icon class-Page"></span><strong class="title">'. $name .'</strong><span class="description">'. $filename .'</span>';
+				
+				// Is there a template thumbnail
+				
+				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$src . $name . '.png" />' :  '<img src="' .$src . 'Blank.png" />');				
+				$html = '<div class="sectionThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
 				$optionset[$name] = $html;
 			}
 			
 			$tplField = new OptionsetField(
 				"Template", 
-				"Vælg template", 
+				"Choose a template", 
 				$optionset, 
 				$this->Template
 			);
@@ -153,5 +157,4 @@ class Section extends DataObject {
 	function file_ext_strip($filename){
 		return preg_replace('/\.[^.]*$/', '', $filename);
 	}	
-	
 }

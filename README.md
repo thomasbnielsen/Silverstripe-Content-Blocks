@@ -40,3 +40,4 @@ Tested on Silverstripe 3.1 beta3
 - Option to add more content placeholders without coding - site config?
 - Build in template generator
 - Create a set of percentage width based SectionTemplates
+- Add a rightclick menu / action button to GridField, copy, move and so on

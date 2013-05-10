@@ -127,7 +127,7 @@ class Section extends DataObject {
 		while(false !== ( $file = readdir($dir)) ) {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ) {
-					recurse_copy($src . '/' . $file,$dst . '/' . $file);
+					$this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
 				}
 				else {
 					copy($src . '/' . $file,$dst . '/' . $file);

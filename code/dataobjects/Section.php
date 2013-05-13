@@ -88,10 +88,17 @@ class Section extends DataObject {
 		$fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Sort', 'Sort order'));
-		$fields->addFieldsToTab("Root.Settings", new ReadonlyField('PageID', 'Relation ID'));//TreeDropdownField("PageID", "This section belongs to:", "SiteTree"));		
+		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this section to:", "SiteTree"));		
 		
 		return $fields;
 	}	
+
+	function onBeforeWrite() {
+		parent::onBeforeWrite();
+		if($this->MoveTo) {	
+			$this->PageID = $this->MoveTo;
+		}
+	}
 
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
@@ -110,15 +117,6 @@ class Section extends DataObject {
 				echo "The default template archive was not found: " . $copyfrom;
 			}
 		}
-		
-		// Perhaps crate a sample page with the module in action?
-/*		if(!DataObject::get_one('PageType')) {
-		$pageType = new PageType();
-		$pageType->write();
-		} 
-*/
-	
-	
 	}	
 
 	function recurse_copy($src,$dst) {

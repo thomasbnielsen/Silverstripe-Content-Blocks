@@ -20,16 +20,8 @@ class SectionModule extends DataExtension {
 			new GridFieldSortableHeader(),
 			new GridFieldDataColumns(),
 			new GridFieldPaginator(20)
-			//new GridFieldEditButton(),
-			//new GridFieldDeleteAction(),
-			//new GridFieldDetailForm()
 		);
-		
-		//if (class_exists('GridFieldExtensions')) {}
-	
-		//$gridFieldConfig->removeComponentsByType('GridFieldEditButton');
-		//$gridFieldConfig->addComponent(new GridFieldDetailFormCustom());
-		
+			
 		$gridFieldConfig->addComponent(new GridFieldDetailFormCustom());
 		$gridFieldConfig->addComponent(new GridFieldEditButton());
 		$gridFieldConfig->addComponent(new GridFieldCopyButton());
@@ -126,5 +118,6 @@ class SectionModule extends DataExtension {
 	
 	public function contentcontrollerInit($controller) {
 		Requirements::themedCSS('section');
+		//Requirements::themedCSS('fluidsection');
 	}
 }

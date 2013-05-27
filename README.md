@@ -26,7 +26,7 @@ Tested on Silverstripe 3.1 beta3
 
 - run sitename.com/dev/build?flush=all
 
-- The module will copy sections/templates/SectionTemplates to themes/your_design/templates/SectionTemplates, should this fail, please copy the files manually.
+- The module will copy sectionmodule/templates/SectionTemplates to themes/your_design/templates/SectionTemplates, should this fail, please copy the files manually.
 - The module will copy sections/css/sections.css to themes/your_design/sections.css, should this fail, please copy the file manually.
 
 ### Usage and customization: ###

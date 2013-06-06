@@ -1,5 +1,5 @@
 {
-	"name": "NobrainerWeb/Silverstripe-Section-Module",
+	"name": "nobrainerweb/silverstripe-section-module",
 	"description": "Split your page content into manageable blocks/sections of content, each with their own template",
 	"type": "silverstripe-module",
 	"homepage": "https://github.com/NobrainerWeb/Silverstripe-Section-Module",

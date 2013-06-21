@@ -15,7 +15,7 @@
 		"issues": "https://github.com/NobrainerWeb/Silverstripe-Section-Module/issues"
 	},
 	"require": {
-		"silverstripe/framework": ">=3.1.0-beta3"
+		"silverstripe/framework": ">=3.1"
 	},
 	"extra": {
 		"installer-name": "sectionmodule"

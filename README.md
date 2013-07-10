@@ -3,6 +3,18 @@ Silverstripe-Section-Module
 
 Split your page content into manageable sections/blocks of content, each with their own template.
 
+## Create compelling and unique pages ##
+This module gives you the option to create your content, in little blocks, instead of just one big content area.
+
+When the module is installed, a "Sections" tab will be added to all pages. The sections tab holds a GridField, that allows you to create as many blocks/sections of content as you would like.
+Each section/block of content can have it's own template assigned. The module commes with a set of standard templates.
+You can easily create your own section templates and even your own sections. This allows for some very flexible sections.
+Create your own section templates and/or extend the Section DataObject to create:
+- Image lists (simple gallery)
+- Employee listings
+- Product listings
+- and much more
+
 ### Version compatibility ###
 Tested on Silverstripe 3.1 beta3
 

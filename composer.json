@@ -15,8 +15,8 @@
 		"issues": "https://github.com/NobrainerWeb/Silverstripe-Section-Module/issues"
 	},
 	"require": {
-        "silverstripe/framework": "3.*",
-		"silverstripe/cms": "3.*",
+        "silverstripe/framework": "~3.1",
+		"silverstripe/cms": "~3.1",
 		"ajshort/silverstripe-gridfieldextensions": "dev-master",
 		"uniun/silverstripe-copybutton": "dev-master",
 		"unclecheese/betterbuttons": "dev-master"

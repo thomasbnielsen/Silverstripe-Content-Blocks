@@ -17,9 +17,9 @@
 	"require": {
         "silverstripe/framework": "3.*",
 		"silverstripe/cms": "3.*",
-		"ajshort/silverstripe-gridfieldextensions",
-		"uniun/silverstripe-copybutton",
-		"unclecheese/betterbuttons"
+		"ajshort/silverstripe-gridfieldextensions": "dev-master",
+		"uniun/silverstripe-copybutton": "dev-master",
+		"unclecheese/betterbuttons": "dev-master"
 	},
 	"extra": {
 		"installer-name": "sectionmodule"

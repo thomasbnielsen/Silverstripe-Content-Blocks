@@ -18,7 +18,7 @@
         "silverstripe/framework": "~3.1",
 		"silverstripe/cms": "~3.1",
 		"ajshort/silverstripe-gridfieldextensions": "dev-master",
-		"uniun/silverstripe-copybutton": "dev-master",
+		"unisolutions/silverstripe-copybutton": "dev-master",
 		"unclecheese/betterbuttons": "dev-master"
 	},
 	"extra": {

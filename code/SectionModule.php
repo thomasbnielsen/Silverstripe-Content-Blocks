@@ -12,21 +12,19 @@ class SectionModule extends DataExtension {
 	);
 
 	public function updateCMSFields(FieldList $fields) {
-		$gridFieldConfig = GridFieldConfig::create()->addComponents(
-			new GridFieldToolbarHeader(),
-			new GridFieldAddNewButton('toolbar-header-right'),
-			new GridFieldSortableHeader(),
-			new GridFieldDataColumns(),
-			new GridFieldPaginator(20)
-		);
+
+		// Relation handler for sections		
+		$SConfig = GridFieldConfig_RecordEditor::create(10);
+		$SConfig->addComponent(new GridFieldOrderableRows('Sort'));
 			
-		$gridFieldConfig->addComponent(new GridFieldDetailFormCustom());
-		$gridFieldConfig->addComponent(new GridFieldEditButton());
-		$gridFieldConfig->addComponent(new GridFieldCopyButton());
-		$gridFieldConfig->addComponent(new GridFieldDeleteAction());
-		$gridFieldConfig->addComponent(new GridFieldOrderableRows('Sort'));
-			
-		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $gridFieldConfig);
+		$SConfig->addComponent(new GridFieldDetailFormCustom());
+		
+		// If the copy button module is installed, add copy as option
+		if (!class_exists('GridFieldCopyButton')) {
+			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
+		}
+
+		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 		
@@ -36,7 +34,7 @@ class SectionModule extends DataExtension {
 		}
 
 		$fields->addFieldToTab("Root.Sections", $gridField);
-		//$this->extend('updateCMSFields', $fields);
+
 		return $fields;
 	}
 

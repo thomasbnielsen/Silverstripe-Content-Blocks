@@ -11,9 +11,7 @@ class SectionModule extends DataExtension {
 		'Sections' => 'Section'
 	);
 
-	//public function getCMSFields() {
 	public function updateCMSFields(FieldList $fields) {
-		//$fields = parent::getCMSFields();
 		$gridFieldConfig = GridFieldConfig::create()->addComponents(
 			new GridFieldToolbarHeader(),
 			new GridFieldAddNewButton('toolbar-header-right'),
@@ -28,50 +26,8 @@ class SectionModule extends DataExtension {
 		$gridFieldConfig->addComponent(new GridFieldDeleteAction());
 		$gridFieldConfig->addComponent(new GridFieldOrderableRows('Sort'));
 			
-	
 		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $gridFieldConfig);
 		
-		//Inline editing - not working
-		
-/*		$gfConfig = GridFieldConfig::create()->addComponents(
-			new GridFieldButtonRow('before'),
-			new GridFieldToolbarHeader(),
-			new GridFieldSortableHeader(),
-			new GridFieldPaginator(20)
-			//new GridFieldEditButton(),
-			//new GridFieldDeleteAction(),
-			//new GridFieldDetailForm()
-		);
-		
-		//if (class_exists('GridFieldExtensions')) {}
-	
-		//$gridFieldConfig->removeComponentsByType('GridFieldEditButton');
-		//$gridFieldConfig->addComponent(new GridFieldDetailFormCustom());
-
-		$gfConfig->addComponent(new GridFieldDetailFormCustom());		
-		$gfConfig->addComponent(new GridFieldOrderableRows('Sort'));
-		$gfConfig->addComponent(new GridFieldEditableColumns());
-		$gfConfig->addComponent(new GridFieldAddNewInlineButton('toolbar-header-right'));
-
-		$gfConfig->addComponent(new GridFieldEditButton());
-		$gfConfig->addComponent(new GridFieldCopyButton());
-		$gfConfig->addComponent(new GridFieldDeleteAction());
-		
-		
-				
-		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $gfConfig);
-		$gridField->getConfig()->getComponentByType('GridFieldEditableColumns')->setDisplayFields(array(
-			'ID' => array(
-				'title' => 'ID',
-				'field' => 'ReadonlyField'
-			),
-			'Name'  => function($record, $column, $grid) {
-				return new TextField($column);
-			},
-			'Thumbnail' => 'Thumbnail'
-
-		));		
-*/		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 		
 		if (count($classes) > 1 && class_exists('GridFieldAddNewMultiClass')) {

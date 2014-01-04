@@ -57,7 +57,7 @@ class SectionModule extends DataExtension {
 			exit('<li style="color: red">The GridField Copy Button module is required: https://github.com/uniun/silverstripe-copybutton</li>');
 		}
 		// If css file does not exist on current theme, copy from module
-		$copyfrom = BASE_PATH . "/sectionmodule/css/section.css";
+		$copyfrom = BASE_PATH . "/".SECTION_MODULE_DIR."/css/section.css";
 		$theme = SSViewer::current_theme();
 		$copyto    = "../themes/".$theme."/css/section.css";
 		

@@ -1,0 +1,10 @@
+---
+name: SectionModule
+---
+
+Page:
+  extensions:
+    - SectionModule
+LeftAndMain:
+  extra_requirements_css:
+    - sectionmodule/css/SectionModule.css

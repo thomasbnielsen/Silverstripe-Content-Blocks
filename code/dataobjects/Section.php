@@ -1,7 +1,7 @@
 <?php
 class Section extends DataObject {
     
-	static $db = array(
+	private static $db = array(
 		'Sort' => 'Int',
         'Name' => 'Varchar',
 		'SectionHeader' => "Enum('None, h1, h2, h3, h4, h5, h6')",
@@ -11,22 +11,22 @@ class Section extends DataObject {
 		'Active' => 'Boolean(1)'
     );
     
-	static $many_many = array(
+	private static $many_many = array(
 		'Images' => 'Image',
     );
 	
-	public static $belongs_many_many = array(
+	private static $belongs_many_many = array(
 		'Pages' => 'Page'
 	);
 	
-	public static $default_sort='Sort';
+	private static $default_sort='Sort';
 	
-	public static $defaults = array(
+	private static $defaults = array(
 		'Template' => 'Default',
 		'Active' => 1
 	);
 
-	public static $summary_fields = array( 
+	private static $summary_fields = array( 
 		'ID' => 'ID',
 		'Thumbnail' => 'Thumbnail',
 		'Name' => 'Name',

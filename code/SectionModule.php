@@ -9,7 +9,7 @@ class SectionModule extends DataExtension {
 		'Sections' => 'Section'
 	);
 	
-	public static $many_many_extraFields=array(
+	private static $many_many_extraFields=array(
         'Sections'=>array(
             'SortOrder'=>'Int'
         )

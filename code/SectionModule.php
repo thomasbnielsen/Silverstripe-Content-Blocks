@@ -1,22 +1,26 @@
 <?php
 class SectionModule extends DataExtension {
 
-	public static $db = array(
-	);
+	private static $db = array();
 
-	public static $has_one = array(
-	);
+	private static $has_one = array();
 	
-	static $has_many = array(
+	private static $many_many = array(
 		'Sections' => 'Section'
 	);
-
+	
+	public static $many_many_extraFields=array(
+        'Sections'=>array(
+            'SortOrder'=>'Int'
+        )
+    );
+	
 	public function updateCMSFields(FieldList $fields) {
 
 		// Relation handler for sections		
 		$SConfig = GridFieldConfig_RecordEditor::create(10);
-		$SConfig->addComponent(new GridFieldOrderableRows('Sort'));
-			
+		$SConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
+
 		$SConfig->addComponent(new GridFieldDetailFormCustom());
 		
 		// If the copy button module is installed, add copy as option
@@ -24,7 +28,7 @@ class SectionModule extends DataExtension {
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
 
-		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $SConfig);
+		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections()->sort('Page_Sections.SortOrder'), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 		
@@ -38,11 +42,27 @@ class SectionModule extends DataExtension {
 		return $fields;
 	}
 
-	function ActiveSections() {
+/*	function ActiveSections() {
 		$sections = $this->owner->Sections()->filter(array('Active' => '1'));
 		return $sections;
 	}
+*/	
+	public function ActiveSections() {
+		return $this->owner->Sections()->filter(array('Active' => '1'))->sort('Page_Sections.SortOrder');
+	}
 	
+	public function Sections() {
+		return $this->owner->Sections()->filter(array('Active' => '1'))->sort('Page_Sections.SortOrder');
+	}
+	
+/*	function ShowTestimonialCategories() {
+		return $this->TestimonialCategories()->sort('TestimonialsHolder_TestimonialCategories.SortOrder');   
+	}	
+	
+	public function Sections() {
+		return $this->owner->getManyManyComponents('Sections')->filter(array('Active' => '1'))->sort('SortOrder');
+	}	
+*/	
 	// Run on dev buld
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();

@@ -11,13 +11,13 @@ class Section extends DataObject {
 		'Active' => 'Boolean(1)'
     );
     
-	static $has_one = array(
-        'Page' => 'Page'
-    );
-
 	static $many_many = array(
 		'Images' => 'Image',
     );
+	
+	public static $belongs_many_many = array(
+		'Pages' => 'Page'
+	);
 	
 	public static $default_sort='Sort';
 	

@@ -1,6 +1,9 @@
 <?php
 class Section extends DataObject {
     
+	private static $singular_name = 'Section';
+	private static $plural_name = 'Sections';	
+
 	private static $db = array(
         'Name' => 'Varchar',
 		'SectionHeader' => "Enum('None, h1, h2, h3, h4, h5, h6')",
@@ -18,8 +21,6 @@ class Section extends DataObject {
 		'Pages' => 'Page'
 	);
 	
-	//private static $default_sort='SortOrder';
-	
 	private static $defaults = array(
 		'Template' => 'Default',
 		'Active' => 1
@@ -33,6 +34,13 @@ class Section extends DataObject {
 		'ClassName' => 'Type',
 		'getIsActive' => 'Active'
 	);
+	
+	private static $searchable_fields = array(
+		'ID' => 'PartialMatchFilter',
+		'Name' => 'PartialMatchFilter',
+		'SectionHeader' => 'PartialMatchFilter',
+	);
+
 	
 	public function getIsActive(){
 		return $this->Active ? 'Yes' : 'No';

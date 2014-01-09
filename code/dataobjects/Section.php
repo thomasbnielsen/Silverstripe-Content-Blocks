@@ -18,7 +18,7 @@ class Section extends DataObject {
 		'Pages' => 'Page'
 	);
 	
-	private static $default_sort='SortOrder';
+	//private static $default_sort='SortOrder';
 	
 	private static $defaults = array(
 		'Template' => 'Default',

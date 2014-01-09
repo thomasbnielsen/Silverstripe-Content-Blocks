@@ -2,7 +2,6 @@
 class Section extends DataObject {
     
 	private static $db = array(
-		'Sort' => 'Int',
         'Name' => 'Varchar',
 		'SectionHeader' => "Enum('None, h1, h2, h3, h4, h5, h6')",
 		'SectionContent' => 'HTMLText',
@@ -19,7 +18,7 @@ class Section extends DataObject {
 		'Pages' => 'Page'
 	);
 	
-	private static $default_sort='Sort';
+	private static $default_sort='SortOrder';
 	
 	private static $defaults = array(
 		'Template' => 'Default',

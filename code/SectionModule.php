@@ -21,14 +21,14 @@ class SectionModule extends DataExtension {
 		$SConfig = GridFieldConfig_RecordEditor::create(10);
 		$SConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
 
-		$SConfig->addComponent(new GridFieldDetailFormCustom());
+		//$SConfig->addComponent(new GridFieldDetailFormCustom());
 		
 		// If the copy button module is installed, add copy as option
 		if (!class_exists('GridFieldCopyButton')) {
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
 
-		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections()->sort('Page_Sections.SortOrder'), $SConfig);
+		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 		
@@ -48,11 +48,11 @@ class SectionModule extends DataExtension {
 	}
 */	
 	public function ActiveSections() {
-		return $this->owner->Sections()->filter(array('Active' => '1'))->sort('Page_Sections.SortOrder');
+		return $this->owner->Sections()->filter(array('Active' => '1'));//->sort('Page_Sections.SortOrder')
 	}
 	
 	public function Sections() {
-		return $this->owner->Sections()->filter(array('Active' => '1'))->sort('Page_Sections.SortOrder');
+		return $this->owner->Sections();//->sort('Page_Sections.SortOrder');
 	}
 	
 /*	function ShowTestimonialCategories() {

@@ -38,12 +38,24 @@ class Section extends DataObject {
 		return $this->Active ? 'Yes' : 'No';
 	}
 	
-	public function getCMSFields() {	
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
+		
 		$fields->removeByName('Sort');
-		$fields->removeByName('PageID');
+		$fields->removeByName('Pages');
 		$fields->removeByName('Active');
 		$fields->removeByName('SectionHeader');
+
+		// If this section belongs to more than one page, show a warning
+		$pcount = $this->Pages()->Count();
+		if($pcount > 1) {
+			$globalwarningfield = new LiteralField("IsGlobalSectionWarning", '<p class="message warning">This section is in use on '.$pcount.' pages - any changes made will also affect the section on these pages</p>');
+			$fields->addFieldToTab("Root.Main", $globalwarningfield, 'Name');
+			$fields->addFieldToTab("Root.Images", $globalwarningfield, 'Images');
+			$fields->addFieldToTab("Root.Template", $globalwarningfield);
+			$fields->addFieldToTab("Root.Settings", $globalwarningfield);
+		}
+		
 		
 		$thumbField = new UploadField('Images', 'Images');
 		$thumbField->allowedExtensions = array('jpg', 'gif', 'png');
@@ -86,8 +98,13 @@ class Section extends DataObject {
 		// Settings tab
 		$fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
-		$fields->addFieldsToTab("Root.Settings", new TextField('Sort', 'Sort order'));
 		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this section to:", "SiteTree"));		
+
+		$PagesConfig = GridFieldConfig_RelationEditor::create(10);
+		$PagesConfig->removeComponentsByType('GridFieldAddNewButton');
+		$gridField = new GridField("Pages", "Related pages (This section is used on the following pages)", $this->Pages(), $PagesConfig);
+		
+		$fields->addFieldToTab("Root.Settings", $gridField);
 		
 		return $fields;
 	}	

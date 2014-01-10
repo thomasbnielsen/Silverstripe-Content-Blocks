@@ -106,6 +106,8 @@ class Section extends DataObject {
 		// Settings tab
 		$fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
+		
+		// Moving a section from one page to another - not working
 		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this section to:", "SiteTree"));		
 
 		$PagesConfig = GridFieldConfig_RelationEditor::create(10);
@@ -119,6 +121,9 @@ class Section extends DataObject {
 
 	function onBeforeWrite() {
 		parent::onBeforeWrite();
+		
+		// Moving a section from one page to another - not working
+		// Left over from has_many version
 		if($this->MoveTo) {	
 			$this->PageID = $this->MoveTo;
 		}

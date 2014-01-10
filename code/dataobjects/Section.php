@@ -1,8 +1,10 @@
 <?php
 class Section extends DataObject {
     
-	static $db = array(
-		'Sort' => 'Int',
+	private static $singular_name = 'Section';
+	private static $plural_name = 'Sections';	
+
+	private static $db = array(
         'Name' => 'Varchar',
 		'SectionHeader' => "Enum('None, h1, h2, h3, h4, h5, h6')",
 		'SectionContent' => 'HTMLText',
@@ -11,22 +13,20 @@ class Section extends DataObject {
 		'Active' => 'Boolean(1)'
     );
     
-	static $has_one = array(
-        'Page' => 'Page'
-    );
-
-	static $many_many = array(
+	private static $many_many = array(
 		'Images' => 'Image',
     );
 	
-	public static $default_sort='Sort';
+	private static $belongs_many_many = array(
+		'Pages' => 'Page'
+	);
 	
-	public static $defaults = array(
+	private static $defaults = array(
 		'Template' => 'Default',
 		'Active' => 1
 	);
 
-	public static $summary_fields = array( 
+	private static $summary_fields = array( 
 		'ID' => 'ID',
 		'Thumbnail' => 'Thumbnail',
 		'Name' => 'Name',
@@ -35,16 +35,35 @@ class Section extends DataObject {
 		'getIsActive' => 'Active'
 	);
 	
+	private static $searchable_fields = array(
+		'ID' => 'PartialMatchFilter',
+		'Name' => 'PartialMatchFilter',
+		'SectionHeader' => 'PartialMatchFilter',
+	);
+
+	
 	public function getIsActive(){
 		return $this->Active ? 'Yes' : 'No';
 	}
 	
-	public function getCMSFields() {	
+	public function getCMSFields() {
 		$fields = parent::getCMSFields();
+		
 		$fields->removeByName('Sort');
-		$fields->removeByName('PageID');
+		$fields->removeByName('Pages');
 		$fields->removeByName('Active');
 		$fields->removeByName('SectionHeader');
+
+		// If this section belongs to more than one page, show a warning
+		$pcount = $this->Pages()->Count();
+		if($pcount > 1) {
+			$globalwarningfield = new LiteralField("IsGlobalSectionWarning", '<p class="message warning">This section is in use on '.$pcount.' pages - any changes made will also affect the section on these pages</p>');
+			$fields->addFieldToTab("Root.Main", $globalwarningfield, 'Name');
+			$fields->addFieldToTab("Root.Images", $globalwarningfield, 'Images');
+			$fields->addFieldToTab("Root.Template", $globalwarningfield);
+			$fields->addFieldToTab("Root.Settings", $globalwarningfield);
+		}
+		
 		
 		$thumbField = new UploadField('Images', 'Images');
 		$thumbField->allowedExtensions = array('jpg', 'gif', 'png');
@@ -87,8 +106,13 @@ class Section extends DataObject {
 		// Settings tab
 		$fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
-		$fields->addFieldsToTab("Root.Settings", new TextField('Sort', 'Sort order'));
 		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this section to:", "SiteTree"));		
+
+		$PagesConfig = GridFieldConfig_RelationEditor::create(10);
+		$PagesConfig->removeComponentsByType('GridFieldAddNewButton');
+		$gridField = new GridField("Pages", "Related pages (This section is used on the following pages)", $this->Pages(), $PagesConfig);
+		
+		$fields->addFieldToTab("Root.Settings", $gridField);
 		
 		return $fields;
 	}	

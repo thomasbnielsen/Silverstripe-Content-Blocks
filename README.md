@@ -17,7 +17,7 @@ Create your own section templates and/or extend the Section DataObject to create
 - and much more
 
 ### Version compatibility ###
-Tested on Silverstripe 3.1 beta3
+Tested on Silverstripe 3.1.2
 
 ### Installation instructions ###
 
@@ -31,11 +31,16 @@ Tested on Silverstripe 3.1 beta3
 	- GridField Extensions
 	https://github.com/ajshort/silverstripe-gridfieldextensions/
 	
-	- silverstripe-copybutton
-	https://github.com/uniun/silverstripe-copybutton
+	- SortableGridfield
+	https://github.com/UndefinedOffset/SortableGridField
 	
-	- Better buttons for GridField by unclecheese (Not required but improves usability)
+	- Better buttons for GridField by unclecheese
 	https://github.com/unclecheese/silverstripe-gridfield-betterbuttons
+	
+Or use Composer:
+```
+"nobrainerweb/silverstripe-section-module": "dev-Many-many"
+```
 
 - run sitename.com/dev/build?flush=all
 

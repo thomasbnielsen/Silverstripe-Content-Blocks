@@ -1,37 +1,30 @@
 <?php
 class SectionModule extends DataExtension {
 
-	private static $db = array();
+	public static $db = array(
+	);
 
-	private static $has_one = array();
-	
-	private static $many_many = array(
-		'Sections' => 'Section'
+	public static $has_one = array(
 	);
 	
-	private static $many_many_extraFields=array(
-        'Sections'=>array(
-            'SortOrder'=>'Int'
-        )
-    );
-	
+	static $has_many = array(
+		'Sections' => 'Section'
+	);
+
 	public function updateCMSFields(FieldList $fields) {
 
 		// Relation handler for sections		
-		$SConfig = GridFieldConfig_RelationEditor::create(25);
-		$SConfig->addComponent(new GridFieldSortableRows('SortOrder'));
-		$SConfig->addComponents(
-			new GridFieldDeleteAction()
-		);
+		$SConfig = GridFieldConfig_RecordEditor::create(10);
+		$SConfig->addComponent(new GridFieldOrderableRows('Sort'));
+			
+		$SConfig->addComponent(new GridFieldDetailFormCustom());
 		
 		// If the copy button module is installed, add copy as option
-		// The action copy is not allowed, so this part is not working anymore
 		if (!class_exists('GridFieldCopyButton')) {
-			//$SConfig->addComponent(new GridFieldDetailFormCustom());
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
 
-		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->getManyManyComponents('Sections')->sort('SortOrder'), $SConfig);
+		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 		
@@ -45,14 +38,11 @@ class SectionModule extends DataExtension {
 		return $fields;
 	}
 
-	public function ActiveSections() {
-		return $this->owner->getManyManyComponents('Sections')->filter(array('Active' => '1'))->sort('SortOrder');//->sort('Page_Sections.SortOrder')
+	function ActiveSections() {
+		$sections = $this->owner->Sections()->filter(array('Active' => '1'));
+		return $sections;
 	}
 	
-	private function Sections() {
-        return $this->owner->getManyManyComponents('Sections')->sort('SortOrder');
-    }
-
 	// Run on dev buld
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
@@ -74,5 +64,6 @@ class SectionModule extends DataExtension {
 	
 	public function contentcontrollerInit($controller) {
 		Requirements::themedCSS('section');
+		//Requirements::themedCSS('fluidsection');
 	}
 }

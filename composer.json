@@ -18,8 +18,7 @@
         "silverstripe/framework": "~3.1",
 		"silverstripe/cms": "~3.1",
 		"ajshort/silverstripe-gridfieldextensions": "dev-master",
-		"unclecheese/betterbuttons": "dev-master",
-		"undefinedoffset/sortablegridfield": "dev-master"
+		"unclecheese/betterbuttons": "dev-master"
 	},
 	"extra": {
 		"installer-name": "sectionmodule"

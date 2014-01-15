@@ -31,9 +31,6 @@ Tested on Silverstripe 3.1.2
 	- GridField Extensions
 	https://github.com/ajshort/silverstripe-gridfieldextensions/
 	
-	- SortableGridfield
-	https://github.com/UndefinedOffset/SortableGridField
-	
 	- Better buttons for GridField by unclecheese
 	https://github.com/unclecheese/silverstripe-gridfield-betterbuttons
 	

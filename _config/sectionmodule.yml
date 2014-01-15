@@ -1,7 +1,6 @@
 ---
 name: SectionModule
 ---
-
 Page:
   extensions:
     - SectionModule

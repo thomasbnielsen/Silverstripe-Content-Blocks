@@ -36,7 +36,7 @@ Tested on Silverstripe 3.1.2
 	
 Or use Composer:
 ```
-"nobrainerweb/silverstripe-section-module": "dev-Many-many"
+"nobrainerweb/silverstripe-section-module": "dev-master"
 ```
 
 - run sitename.com/dev/build?flush=all

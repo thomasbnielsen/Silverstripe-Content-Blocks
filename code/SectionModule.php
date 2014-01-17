@@ -21,12 +21,14 @@ class SectionModule extends DataExtension {
 		$SConfig->addComponent(new GridFieldDeleteAction());
 		
 		// If the copy button module is installed, add copy as option
-		// The action copy is not allowed, so this part is not working anymore
-/*		if (class_exists('GridFieldCopyButton')) {
+		if (class_exists('GridFieldCopyButton')) {
+	
+			$SConfig->removeComponentsByType('GridFieldDetailForm');
+	
 			$SConfig->addComponent(new GridFieldDetailFormCustom());
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
-*/
+
 		$gridField = new GridField("Sections", "Sections (Content blocks)", $this->owner->Sections(), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));

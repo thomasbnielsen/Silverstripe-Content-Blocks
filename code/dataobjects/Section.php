@@ -121,12 +121,13 @@ class Section extends DataObject {
 
 	function onBeforeWrite() {
 		parent::onBeforeWrite();
-		
+					
 		// Moving a section from one page to another - not working
 		// Left over from has_many version
-		if($this->MoveTo) {	
-			$this->PageID = $this->MoveTo;
-		}
+		//if($this->MoveTo) {
+			//$this->PageID = $this->MoveTo;
+		//}
+		
 	}
 
 	function requireDefaultRecords() {
@@ -147,6 +148,31 @@ class Section extends DataObject {
 			}
 		}
 	}	
+
+	public function canDelete($member = null) {
+		if(!$member || !(is_a($member, 'Member')) || is_numeric($member)) $member = Member::currentUser();
+
+		// extended access checks
+		$results = $this->extend('canDelete', $member);
+		
+		if($results && is_array($results)) {
+			if(!min($results)) return false;
+			else return true;
+		}
+
+		// No member found
+		if(!($member && $member->exists())) return false;
+		
+		$pcount = $this->Pages()->Count();
+		if($pcount > 1) {
+			return false;
+		} else {
+			return true;
+		}
+		
+		
+		return $this->canEdit($member);
+	}
 
 	function recurse_copy($src,$dst) {
 		$dir = opendir($src);

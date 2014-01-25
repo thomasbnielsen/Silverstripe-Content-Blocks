@@ -63,3 +63,7 @@
   display: table;
   clear: both;
 }
+
+.cms table.ss-gridfield-table tbody td.col-buttons {
+	text-align: left;
+}

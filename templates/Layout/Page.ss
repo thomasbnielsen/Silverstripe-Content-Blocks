@@ -3,10 +3,7 @@
 	<article>
 		<h1>$Title</h1>
 		<div class="content">$Content</div>
-		<div id="Sections">
-			<% loop ActiveBlocks %>
-				$Me
-			<% end_loop %>
+		<div class="blocks"><% loop ActiveBlocks %>$Me<% end_loop %>
 		</div>	
 	</article>
 	$Form

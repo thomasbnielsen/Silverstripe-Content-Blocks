@@ -1,6 +1,9 @@
 <?php
 class SectionModule extends DataExtension {
 
+	private static $create_section_tab = true;
+	private static $contentarea_rows = 12;
+
 	private static $db = array();
 
 	private static $has_one = array();
@@ -37,9 +40,17 @@ class SectionModule extends DataExtension {
 			$gridFieldConfig->removeComponentsByType('GridFieldAddNewButton');
 			$gridFieldConfig->addComponent(new GridFieldAddNewMultiClass());
 		}
-
-		$fields->addFieldToTab("Root.Sections", $gridField);
-
+		
+		if (self::$create_section_tab) {
+			$fields->addFieldToTab("Root.Sections", $gridField);
+		} else {
+			// Downsize the content field
+			$fields->removeByName('Content');
+			$fields->addFieldToTab('Root.Main', HTMLEditorField::create('Content')->setRows(self::$contentarea_rows), 'Metadata');
+			
+			$fields->addFieldToTab("Root.Main", $gridField, 'Metadata');
+		}
+		
 		return $fields;
 	}
 

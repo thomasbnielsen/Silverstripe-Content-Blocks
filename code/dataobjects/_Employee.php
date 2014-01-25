@@ -1,10 +1,10 @@
 <?php
-class Employee extends Section {
+class Employee extends Block {
     
 	static $db = array(
-		'EmployeeName' => 'Varchar',
-		'EmployeePhone' => 'Varchar',
-		'EmployeeEmail' => 'Varchar'
+		'Name' => 'Varchar',
+		'Phone' => 'Varchar',
+		'Email' => 'Varchar'
     );
     
 	static $has_one = array(
@@ -17,9 +17,9 @@ class Employee extends Section {
 	public function getCMSFields() {
 		
 		$fields = parent::getCMSFields();
-		$fields->addFieldsToTab("Root.Employee", new TextField('EmployeeName', 'Name')); 
-		$fields->addFieldsToTab("Root.Employee", new TextField('EmployeePhone', 'Phone')); 
-		$fields->addFieldsToTab("Root.Employee", new TextField('EmployeeEmail', 'Email')); 
+		$fields->addFieldsToTab("Root.Employee", new TextField('Name', 'Name')); 
+		$fields->addFieldsToTab("Root.Employee", new TextField('Phone', 'Phone')); 
+		$fields->addFieldsToTab("Root.Employee", new TextField('Email', 'Email')); 
 
 		return $fields;
 	}	

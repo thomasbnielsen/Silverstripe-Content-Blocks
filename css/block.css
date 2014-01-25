@@ -1,0 +1,101 @@
+@charset "UTF-8";
+/* CSS Document */
+.block { width: 500px; }
+.block .picturewrap { padding: 0  0 5px 0; }
+.block .textwrap { padding: 0  0 5px 0; }
+
+.block .span1 { width: 110px; }
+.block .span2 { width: 240px; }
+.block .span3 { width: 370px; }
+.block .span4 { width: 500px; }
+
+.block.picturefirst .picturewrap, .block.textfirst .textwrap { float: left; padding-right: 20px; }
+.block.picturefirst .textwrap, .block.textfirst .picturewrap { float: right; }
+
+.block.wrap.picturefirst .picturewrap { padding-right: 20px; }
+.block.wrap.textfirst .picturewrap { padding-left: 20px; }
+.block.wrap .textwrap { padding: 0; }
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.typography .block img {
+	border: none;
+}
+
+.fluidblock { }
+.fluidblock .picturewrap { padding: 0  0 5px 0; }
+.fluidblock .textwrap { padding: 0  0 5px 0; }
+
+.fluidblock .span1of4 { width: 25%; }
+.fluidblock .span2of4 { width: 50%; }
+.fluidblock .span3of4 { width: 75%; }
+.fluidblock .span4of4 { width: 100%; }
+
+.fluidblock .picturewrap, .fluidblock .textwrap {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.fluidblock.picturefirst .picturewrap { float: left; padding-right: 20px; }
+.fluidblock.picturefirst .textwrap { float: right; }
+
+.fluidblock.textfirst .picturewrap { float: right; padding-left: 20px; }
+.fluidblock.textfirst .textwrap { float: left; }
+
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.fluidblock .picturewrap img {
+	max-width: 100%;
+	border: none;
+	display: block;
+}
+
+
+/* *********************************************************************************************************************
+ * Responsive examples
+ */
+@media all and (min-width: 1024px) {
+}
+
+
+/* *********************************************************************************************************************
+ * Small devices
+ */
+@media all and (max-width: 500px) {	
+	.fluidblock .span1of4, .fluidblock .span3of4  {
+		float: none !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		width: 100% !important;
+	}
+}
+
+@media all and (max-width: 500px) {	
+	.fluidblock.picturefirst .picturewrap.span2of4 {
+		padding-right: 10px;
+	}
+	.fluidblock.textfirst .picturewrap.span2of4 {
+		padding-left: 10px;
+	}
+}
+
+@media all and (max-width: 350px) {	
+	.fluidblock .span2of4 {
+		float: none !important;
+		padding: 0 !important;
+		width: 100% !important;
+	}
+}

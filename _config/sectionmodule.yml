@@ -1,9 +1,9 @@
 ---
-name: SectionModule
+name: ContentBlocksModule
 ---
 Page:
   extensions:
-    - SectionModule
+    - ContentBlocksModule
 LeftAndMain:
   extra_requirements_css:
-    - sectionmodule/css/SectionModule.css
+    - sectionmodule/css/ContentBlocksModule.css

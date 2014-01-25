@@ -1,13 +1,13 @@
 <?php
-class Section extends DataObject {
+class Block extends DataObject {
     
-	private static $singular_name = 'Section';
-	private static $plural_name = 'Sections';	
+	private static $singular_name = 'Block';
+	private static $plural_name = 'Blocks';	
 
 	private static $db = array(
         'Name' => 'Varchar',
-		'SectionHeader' => "Enum('None, h1, h2, h3, h4, h5, h6')",
-		'SectionContent' => 'HTMLText',
+		'Header' => "Enum('None, h1, h2, h3, h4, h5, h6')",
+		'Content' => 'HTMLText',
         'Link' => 'Varchar',
 		'Template' => 'Varchar',
 		'Active' => 'Boolean(1)'
@@ -38,7 +38,7 @@ class Section extends DataObject {
 	private static $searchable_fields = array(
 		'ID' => 'PartialMatchFilter',
 		'Name' => 'PartialMatchFilter',
-		'SectionHeader' => 'PartialMatchFilter',
+		'Header' => 'PartialMatchFilter',
 	);
 
 	
@@ -52,12 +52,12 @@ class Section extends DataObject {
 		$fields->removeByName('Sort');
 		$fields->removeByName('Pages');
 		$fields->removeByName('Active');
-		$fields->removeByName('SectionHeader');
+		$fields->removeByName('Header');
 
-		// If this section belongs to more than one page, show a warning
+		// If this Block belongs to more than one page, show a warning
 		$pcount = $this->Pages()->Count();
 		if($pcount > 1) {
-			$globalwarningfield = new LiteralField("IsGlobalSectionWarning", '<p class="message warning">This section is in use on '.$pcount.' pages - any changes made will also affect the section on these pages</p>');
+			$globalwarningfield = new LiteralField("IsGlobalBlockWarning", '<p class="message warning">This block is in use on '.$pcount.' pages - any changes made will also affect the block on these pages</p>');
 			$fields->addFieldToTab("Root.Main", $globalwarningfield, 'Name');
 			$fields->addFieldToTab("Root.Images", $globalwarningfield, 'Images');
 			$fields->addFieldToTab("Root.Template", $globalwarningfield);
@@ -69,8 +69,8 @@ class Section extends DataObject {
 		$thumbField->allowedExtensions = array('jpg', 'gif', 'png');
 	
 		$fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name'));
-		$fields->addFieldsToTab("Root.Main", new DropdownField('SectionHeader', 'Choose a header', $this->dbObject('SectionHeader')->enumValues()), 'SectionContent');
-		$fields->addFieldsToTab("Root.Main", new HTMLEditorField('SectionContent', 'Content'));
+		$fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Choose a header', $this->dbObject('Header')->enumValues()), 'Content');
+		$fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));
 
 		// Image tab
 		$fields->addFieldsToTab("Root.Images", $thumbField);
@@ -79,7 +79,7 @@ class Section extends DataObject {
 		// Template tab
 		$optionset = array();
 		$theme = SSViewer::current_theme();
-		$src    = "../themes/".$theme."/templates/SectionTemplates/";
+		$src    = "../themes/".$theme."/templates/BlockTemplates/";
 		
 		if(file_exists($src)) {
 			foreach (glob($src . "*.ss") as $filename) {	
@@ -88,7 +88,7 @@ class Section extends DataObject {
 				// Is there a template thumbnail
 				
 				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$src . $name . '.png" />' :  '<img src="' .$src . 'Blank.png" />');				
-				$html = '<div class="sectionThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
+				$html = '<div class="BlockThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
 				$optionset[$name] = $html;
 			}
 			
@@ -107,12 +107,12 @@ class Section extends DataObject {
 		$fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
 		
-		// Moving a section from one page to another - not working
-		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this section to:", "SiteTree"));		
+		// Moving a Block from one page to another - not working
+		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this block to:", "SiteTree"));		
 
 		$PagesConfig = GridFieldConfig_RelationEditor::create(10);
 		$PagesConfig->removeComponentsByType('GridFieldAddNewButton');
-		$gridField = new GridField("Pages", "Related pages (This section is used on the following pages)", $this->Pages(), $PagesConfig);
+		$gridField = new GridField("Pages", "Related pages (This block is used on the following pages)", $this->Pages(), $PagesConfig);
 		
 		$fields->addFieldToTab("Root.Settings", $gridField);
 		
@@ -122,7 +122,7 @@ class Section extends DataObject {
 	function onBeforeWrite() {
 		parent::onBeforeWrite();
 					
-		// Moving a section from one page to another - not working
+		// Moving a Block from one page to another - not working
 		// Left over from has_many version
 		//if($this->MoveTo) {
 			//$this->PageID = $this->MoveTo;
@@ -136,13 +136,13 @@ class Section extends DataObject {
 		
 		// If templates does not exist on current theme, copy from module
 		$theme = SSViewer::current_theme();
-		$copyto    = "../themes/".$theme."/templates/SectionTemplates/";
+		$copyto    = "../themes/".$theme."/templates/".CONTENTBLOCKS_TEMPLATE_DIR."/";
 		
 		if(!file_exists($copyto)) {
-			$copyfrom = BASE_PATH . "/sectionmodule/templates/SectionTemplates/";
+			$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/templates/".CONTENTBLOCKS_TEMPLATE_DIR."/";
 			if(file_exists($copyfrom)) {
 				$this->recurse_copy($copyfrom, $copyto);
-				echo '<li style="color: green">SectionTemplates copied to: '.$copyto.'</li>';
+				echo '<li style="color: green">BlockTemplates copied to: '.$copyto.'</li>';
 			} else {
 				echo "The default template archive was not found: " . $copyfrom;
 			}

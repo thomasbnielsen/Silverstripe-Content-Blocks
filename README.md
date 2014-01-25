@@ -27,6 +27,11 @@ Tested on Silverstripe 3.1.2
 <div class="blocks"><% loop ActiveBlocks %>$Me<% end_loop %></div>
 ```
 
+Or you can ask for a single Block to render via it's ID (replace 5 with your ID):
+```
+$OneBlock(5)
+```
+
 - install the following dependent module(s)
 	- GridField Extensions
 	https://github.com/ajshort/silverstripe-gridfieldextensions/

@@ -15,13 +15,6 @@
 .block.wrap.picturefirst .picturewrap { padding-right: 20px; }
 .block.wrap.textfirst .picturewrap { padding-left: 20px; }
 .block.wrap .textwrap { padding: 0; }
-.clearfix:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
 
 .typography .block img {
 	border: none;

@@ -58,6 +58,10 @@ class ContentBlocksModule extends DataExtension {
 		return $this->owner->Blocks()->filter(array('Active' => '1'))->sort('Sort');
 	}
 	
+	public function OneBlock($id) {
+		return Block::get()->byID($id);
+	}	
+	
 	// Run on dev buld
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();

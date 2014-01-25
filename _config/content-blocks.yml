@@ -4,6 +4,9 @@ name: ContentBlocksModule
 Page:
   extensions:
     - ContentBlocksModule
+#Block:
+#  extensions:
+#    - Versioned("Stage","Live")
 LeftAndMain:
   extra_requirements_css:
     - content-blocks/css/ContentBlocksModule.css

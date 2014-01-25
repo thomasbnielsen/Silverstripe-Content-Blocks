@@ -39,6 +39,7 @@ class Block extends DataObject {
 		'ID' => 'PartialMatchFilter',
 		'Name' => 'PartialMatchFilter',
 		'Header' => 'PartialMatchFilter',
+		'Active'
 	);
 
 	
@@ -69,7 +70,7 @@ class Block extends DataObject {
 		$thumbField->allowedExtensions = array('jpg', 'gif', 'png');
 	
 		$fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name'));
-		$fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Choose a header', $this->dbObject('Header')->enumValues()), 'Content');
+		$fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Use name as header', $this->dbObject('Header')->enumValues()), 'Content');
 		$fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));
 
 		// Image tab
@@ -88,7 +89,7 @@ class Block extends DataObject {
 				// Is there a template thumbnail
 				
 				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$src . $name . '.png" />' :  '<img src="' .$src . 'Blank.png" />');				
-				$html = '<div class="BlockThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
+				$html = '<div class="blockThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
 				$optionset[$name] = $html;
 			}
 			
@@ -107,9 +108,6 @@ class Block extends DataObject {
 		$fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
 		$fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
 		
-		// Moving a Block from one page to another - not working
-		$fields->addFieldsToTab("Root.Settings", new TreeDropdownField("MoveTo", "Move this block to:", "SiteTree"));		
-
 		$PagesConfig = GridFieldConfig_RelationEditor::create(10);
 		$PagesConfig->removeComponentsByType('GridFieldAddNewButton');
 		$gridField = new GridField("Pages", "Related pages (This block is used on the following pages)", $this->Pages(), $PagesConfig);
@@ -121,12 +119,6 @@ class Block extends DataObject {
 
 	function onBeforeWrite() {
 		parent::onBeforeWrite();
-					
-		// Moving a Block from one page to another - not working
-		// Left over from has_many version
-		//if($this->MoveTo) {
-			//$this->PageID = $this->MoveTo;
-		//}
 		
 	}
 

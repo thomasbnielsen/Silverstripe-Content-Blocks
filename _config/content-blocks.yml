@@ -6,4 +6,4 @@ Page:
     - ContentBlocksModule
 LeftAndMain:
   extra_requirements_css:
-    - sectionmodule/css/ContentBlocksModule.css
+    - content-blocks/css/ContentBlocksModule.css

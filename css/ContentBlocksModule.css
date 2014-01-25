@@ -30,7 +30,7 @@
 }
 
 
-#Template ul li .sectionThumbnail {
+#Template ul li .blockThumbnail {
 	position: absolute;
 		left: 35px;
 		top: 10px;
@@ -41,11 +41,11 @@
 	box-shadow: 0 0 1px rgba(0,0,0,0.3);
 }
 
-	#Template ul li .sectionThumbnail img {
+	#Template ul li .blockThumbnail img {
 		border-radius: 4px;
 	}
 	
-#Template ul li .sectionThumbnail { }
+#Template ul li .blockThumbnail { }
 
 #Template ul li .title {
 	position: absolute;

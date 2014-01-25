@@ -41,7 +41,7 @@ class ContentBlocksModule extends DataExtension {
 			$gridFieldConfig->addComponent(new GridFieldAddNewMultiClass());
 		}
 		
-		if (self::$create_section_tab) {
+		if (self::$create_block_tab) {
 			$fields->addFieldToTab("Root.Blocks", $gridField);
 		} else {
 			// Downsize the content field
@@ -63,9 +63,9 @@ class ContentBlocksModule extends DataExtension {
 		parent::requireDefaultRecords();
 		
 		// If css file does not exist on current theme, copy from module
-		$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/css/section.css";
+		$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/css/block.css";
 		$theme = SSViewer::current_theme();
-		$copyto    = "../themes/".$theme."/css/section.css";
+		$copyto    = "../themes/".$theme."/css/block.css";
 		
 		if(!file_exists($copyto)) {
 			if(file_exists($copyfrom)) {

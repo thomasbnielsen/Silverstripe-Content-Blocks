@@ -1,4 +1,4 @@
-Silverstripe-Section-Module
+Silverstripe-Content-Blocks (previous: Silverstripe-Section-Module)
 ===========================
 
 Split your page content into manageable sections/blocks of content, each with their own template.
@@ -22,9 +22,9 @@ Tested on Silverstripe 3.1.2
 ### Installation instructions ###
 
 - Put this module under the root folder of site, named sectionmodule.
-- Add the following code to your themes/your_design/templates/Layout/Page.ss where you want the content sections to be rendered:
+- Add the following code to your themes/your_design/templates/Layout/Page.ss where you want the content blocks to be rendered:
 ```
-<div id="Sections"><% loop ActiveSections %>$Me<% end_loop %></div>
+<div class="blocks"><% loop ActiveBlocks %>$Me<% end_loop %></div>
 ```
 
 - install the following dependent module(s)
@@ -41,8 +41,8 @@ Or use Composer:
 
 - run sitename.com/dev/build?flush=all
 
-- The module will copy sectionmodule/templates/SectionTemplates to themes/your_design/templates/SectionTemplates, should this fail, please copy the files manually.
-- The module will copy sections/css/sections.css to themes/your_design/sections.css, should this fail, please copy the file manually.
+- The module will copy content-blocks/templates/BlockTemplates to themes/your_design/templates/BlockTemplates, should this fail, please copy the files manually.
+- The module will copy content-blocks/css/sections.css to themes/your_design/sections.css, should this fail, please copy the file manually.
 
 ### Usage and customization: ###
 - add your own templates to themes/your_design/templates/SectionTemplates, they need to have the extension .ss and delete any unwanted templates (there is full example set of fixed width and fluid width templates included in the module)
@@ -50,7 +50,8 @@ Or use Composer:
 - remember to ?flush=1 after modification of templates
 
 ### TODO: ###
-- Save available templates in database (enum field) - create on dev/build or use template manifest
-- Make inline editing of sections work (edit name, template, active - show id, picture, DO Type)
 - Option to add more content placeholders without coding - site config?
+
+### IDEAS ###
+- Save available templates in database (enum field) - create on dev/build or use template manifest
 - Build in template generator

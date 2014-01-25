@@ -1,9 +1,9 @@
 {
-	"name": "nobrainerweb/silverstripe-section-module",
+	"name": "nobrainerweb/silverstripe-content-blocks",
 	"description": "Split your page content into manageable blocks/sections of content, each with their own template",
 	"type": "silverstripe-module",
-	"homepage": "https://github.com/NobrainerWeb/Silverstripe-Section-Module",
-	"keywords": ["silverstripe", "section", "sections", "blocks"],
+	"homepage": "https://github.com/NobrainerWeb/Silverstripe-Content-Blocks",
+	"keywords": ["silverstripe", "section", "sections", "blocks", "content"],
 	"license": "BSD-3-Clause",
 	"authors": [
 		{
@@ -12,7 +12,7 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/NobrainerWeb/Silverstripe-Section-Module/issues"
+		"issues": "https://github.com/NobrainerWeb/Silverstripe-Content-Blocks/issues"
 	},
 	"require": {
         "silverstripe/framework": "~3.1",
@@ -21,6 +21,6 @@
 		"unclecheese/betterbuttons": "dev-master"
 	},
 	"extra": {
-		"installer-name": "sectionmodule"
+		"installer-name": "content-blocks"
 	}
 }

@@ -5,7 +5,6 @@ class Employee extends Section {
 		'EmployeeName' => 'Varchar',
 		'EmployeePhone' => 'Varchar',
 		'EmployeeEmail' => 'Varchar'
-		
     );
     
 	static $has_one = array(

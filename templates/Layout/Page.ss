@@ -4,7 +4,7 @@
 		<h1>$Title</h1>
 		<div class="content">$Content</div>
 		<div id="Sections">
-			<% loop ActiveSections %>
+			<% loop ActiveBlocks %>
 				$Me
 			<% end_loop %>
 		</div>	

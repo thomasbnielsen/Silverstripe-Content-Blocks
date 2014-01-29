@@ -1,5 +1,5 @@
-<div class="section clearfix textfirst wrap item{$Pos}">
-<% if $SectionHeader != "None" %><{$SectionHeader}>$Name</{$SectionHeader}><% end_if %>
+<div class="block clearfix textfirst wrap item{$Pos}">
+<% if $Header != "None" %><{$Header}>$Name</{$Header}><% end_if %>
 <div class="textwrap">
 	<div class="picturewrap span2">
 	<% if Images %>
@@ -8,5 +8,5 @@
 		<% end_loop %>
 	<% end_if %>
 	</div>
-	$SectionContent</div>
+	$Content</div>
 </div>

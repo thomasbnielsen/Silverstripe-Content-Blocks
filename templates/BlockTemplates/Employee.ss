@@ -1,5 +1,5 @@
-<div class="section clearfix picturefirst item{$Pos}">
-	<% if $SectionHeader != "None" %><{$SectionHeader}>$Name</{$SectionHeader}><% end_if %>
+<div class="block clearfix picturefirst item{$Pos}">
+	<% if $Header != "None" %><{$Header}>$Name</{$Header}><% end_if %>
 	<div class="picturewrap span1">
 	<% if Images %>
 		<% loop Images %>
@@ -11,6 +11,6 @@
 		<div><strong>Name: </strong>$EmployeeName</div>
 		<div><strong>Phone: </strong>$EmployeePhone</div>
 		<div><strong>Email: </strong>$EmployeeEmail</div>
-		$SectionContent
+		$Content
 	</div>
 </div>

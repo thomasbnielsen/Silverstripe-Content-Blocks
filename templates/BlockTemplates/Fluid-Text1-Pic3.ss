@@ -1,6 +1,6 @@
-<div class="fluidsection clearfix textfirst item{$Pos}">
-	<% if $SectionHeader != "None" %><{$SectionHeader}>$Name</{$SectionHeader}><% end_if %>
-	<div class="textwrap span1of4">$SectionContent</div>
+<div class="fluidblock clearfix textfirst item{$Pos}">
+	<% if $Header != "None" %><{$Header}>$Name</{$Header}><% end_if %>
+	<div class="textwrap span1of4">$Content</div>
 	<div class="picturewrap span3of4">
 	<% if Images %>
 		<% loop Images %>

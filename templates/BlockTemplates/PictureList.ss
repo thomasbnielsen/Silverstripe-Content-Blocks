@@ -1,10 +1,10 @@
-<div class="section item{$Pos}">
-	<% if $SectionHeader != "None" %><{$SectionHeader}>$Name</{$SectionHeader}><% end_if %>
+<div class="block item{$Pos}">
+	<% if $Header != "None" %><{$Header}>$Name</{$Header}><% end_if %>
 	<h2>$Name</h2>
 	<% if Images %>
 		<% loop Images %>
 			$CroppedImage(150,100)
 		<% end_loop %>
 	<% end_if %>
-	$SectionContent
+	$Content
 </div>

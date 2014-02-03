@@ -17,6 +17,10 @@ class Block extends DataObject {
 		'Images' => 'Image',
     );
 	
+	private static $many_many_extraFields = array(
+		'Images' => array('Sort' => 'Int')
+	);	
+	
 	private static $belongs_many_many = array(
 		'Pages' => 'Page'
 	);

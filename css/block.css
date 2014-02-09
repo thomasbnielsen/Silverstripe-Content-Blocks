@@ -1,5 +1,8 @@
 @charset "UTF-8";
-/* CSS Document */
+/* 
+This CSS file is a simple example implementation of a grid system for the content block templates.
+I would suggest you copy the needed styles from this file to your layout.css and remove the requiremnents call from ContentBlocksModule.php - Requirements::themedCSS('block');
+*/
 .block { width: 500px; }
 .block .picturewrap { padding: 0  0 5px 0; }
 .block .textwrap { padding: 0  0 5px 0; }

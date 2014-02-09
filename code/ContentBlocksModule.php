@@ -84,4 +84,21 @@ class ContentBlocksModule extends DataExtension {
 	public function contentcontrollerInit($controller) {
 		Requirements::themedCSS('block');
 	}
+
+	/**
+	* Simple support for Translatable, when a page is translated, copy all content blocks and relate to translated page
+	*/
+	public function onTranslatableCreate() {
+		
+		$translatedPage = $this->owner;
+		// Getting the parent translation
+		//$originalPage = $translatedPage->getTranslation('en_US');
+		$originalPage = $this->getTranslation(self::default_locale());
+		foreach($originalPage->Blocks() as $originalBlock) {
+			$block = $originalBlock->duplicate(true);
+			$translatedPage->Blocks()->add($block);
+		}
+
+	}	
+	
 }

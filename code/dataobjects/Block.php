@@ -97,13 +97,14 @@ class Block extends DataObject {
 				$optionset[$name] = $html;
 			}
 			
-			$tplField = new OptionsetField(
+			$tplField = OptionsetField::create(
 				"Template", 
 				"Choose a template", 
 				$optionset, 
 				$this->Template
-			);
+			)->addExtraClass('stacked');
 			$fields->addFieldsToTab("Root.Template", $tplField);
+			
 		} else {
 			$fields->addFieldsToTab("Root.Template", new LiteralField ($name = "literalfield", $content = '<p class="message warning"><strong>Warning:</strong> The folder '.$src.' was not found.</div>'));
 		}

@@ -93,7 +93,8 @@ class ContentBlocksModule extends DataExtension {
 		$translatedPage = $this->owner;
 		// Getting the parent translation
 		//$originalPage = $translatedPage->getTranslation('en_US');
-		$originalPage = $this->getTranslation(self::default_locale());
+		print $this->owner->default_locale();
+		$originalPage = $this->owner->getTranslation($this->owner->default_locale());
 		foreach($originalPage->Blocks() as $originalBlock) {
 			$block = $originalBlock->duplicate(true);
 			$translatedPage->Blocks()->add($block);

@@ -83,16 +83,16 @@ class Block extends DataObject {
 		
 		// Template tab
 		$optionset = array();
-		$theme = SSViewer::current_theme();
-		$src    = "../themes/".$theme."/templates/BlockTemplates/";
+		$theme	= SSViewer::current_theme();
+		$src	= BASE_PATH . "/themes/".$theme."/templates/BlockTemplates/";
+		$imgsrc	= "/themes/".$theme."/templates/BlockTemplates/";
 		
 		if(file_exists($src)) {
 			foreach (glob($src . "*.ss") as $filename) {	
 				$name = $this->file_ext_strip(basename($filename));
 				
 				// Is there a template thumbnail
-				
-				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$src . $name . '.png" />' :  '<img src="' .$src . 'Blank.png" />');				
+				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$imgsrc . $name . '.png" />' :  '<img src="' .$imgsrc . 'Blank.png" />'); // TODO: Perhaps just add blank as alt for image, no need to check for existance?
 				$html = '<div class="blockThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
 				$optionset[$name] = $html;
 			}

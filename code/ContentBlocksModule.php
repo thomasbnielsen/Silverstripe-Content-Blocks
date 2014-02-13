@@ -69,7 +69,7 @@ class ContentBlocksModule extends DataExtension {
 		// If css file does not exist on current theme, copy from module
 		$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/css/block.css";
 		$theme = SSViewer::current_theme();
-		$copyto    = "../themes/".$theme."/css/block.css";
+		$copyto    = BASE_PATH . "/themes/".$theme."/css/block.css";
 		
 		if(!file_exists($copyto)) {
 			if(file_exists($copyfrom)) {
@@ -93,7 +93,6 @@ class ContentBlocksModule extends DataExtension {
 		$translatedPage = $this->owner;
 		// Getting the parent translation
 		//$originalPage = $translatedPage->getTranslation('en_US');
-		print $this->owner->default_locale();
 		$originalPage = $this->owner->getTranslation($this->owner->default_locale());
 		foreach($originalPage->Blocks() as $originalBlock) {
 			$block = $originalBlock->duplicate(true);

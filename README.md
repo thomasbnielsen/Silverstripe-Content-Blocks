@@ -60,3 +60,6 @@ Or use Composer:
 ### IDEAS ###
 - Save available templates in database (enum field) - create on dev/build or use template manifest
 - Build in template generator
+- Form blocks
+- Better previews (C/P from design)
+- Improve the "multiple classes" add button - block as default add option, arrow for dropdown to select other classes

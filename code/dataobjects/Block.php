@@ -189,9 +189,19 @@ class Block extends DataObject {
 	
 	public function getThumbnail() { 
 		if ($this->Images()->Count() >= 1) {
-			return $this->Images()->First()->croppedImage(50,40);
+			return $this->Images()->First()->croppedImage(60, 60);
 		}
 	}	
+	
+	// Show template thumbnail in gridfield
+	public function getTemplateIcon() { 
+		$theme = SSViewer::current_theme();
+		$src   = "../themes/".$theme."/templates/BlockTemplates/";
+		$obj   = HTMLText::create();
+		$obj   -> setValue('<img style="width: 60px; height: 60px;" src="'.$src . $this->Template . '.png"/>');
+		return $obj;
+		
+	}		
 	
 	function forTemplate() {
 		return $this->renderWith($this->Template);

@@ -41,7 +41,7 @@ $OneBlock(5)
 	
 Or use Composer:
 ```
-"nobrainerweb/silverstripe-section-module": "dev-master"
+"nobrainerweb/silverstripe-content-blocks": "dev-master"
 ```
 
 - run sitename.com/dev/build?flush=all

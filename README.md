@@ -56,6 +56,8 @@ Or use Composer:
 
 ### TODO: ###
 - Option to add more content placeholders without coding - site config?
+- Handle search
+- Versioning
 
 ### IDEAS ###
 - Save available templates in database (enum field) - create on dev/build or use template manifest

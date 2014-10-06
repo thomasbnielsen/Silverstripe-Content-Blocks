@@ -1,0 +1,7 @@
+---
+Name: blockroutes
+After: framework/routes#coreroutes
+---
+Director:
+  rules:
+    'blocks//$Action/$ID/$Name': 'Block_Controller'

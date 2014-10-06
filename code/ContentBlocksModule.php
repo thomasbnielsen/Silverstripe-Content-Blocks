@@ -24,7 +24,7 @@ class ContentBlocksModule extends DataExtension {
 		$SConfig->addComponent(new GridFieldDeleteAction());
 		
 		// If the copy button module is installed, add copy as option
-		if (class_exists('GridFieldCopyButton')) {
+		if (class_exists('GridFieldCopyButton')) { // Is this bugged still? copy action not allowed
 	
 			$SConfig->removeComponentsByType('GridFieldDetailForm');
 	
@@ -87,6 +87,8 @@ class ContentBlocksModule extends DataExtension {
 
 	/**
 	* Simple support for Translatable, when a page is translated, copy all content blocks and relate to translated page
+	* TODO: This is not working as intended, for some reason an image is added to the duplicated block
+	* All blocks are added to translated page - or something else ...
 	*/
 	public function onTranslatableCreate() {
 		

@@ -9,16 +9,19 @@ class Block extends DataObject {
 		'Header' => "Enum('None, h1, h2, h3, h4, h5, h6')",
 		'Content' => 'HTMLText',
         'Link' => 'Varchar',
+		'VideoURL' => 'Varchar',
 		'Template' => 'Varchar',
 		'Active' => 'Boolean(1)'
     );
     
 	private static $many_many = array(
 		'Images' => 'Image',
+		'Files' => 'File'
     );
 	
 	private static $many_many_extraFields = array(
-		'Images' => array('Sort' => 'Int')
+		'Images' => array('SortOrder' => 'Int'),
+		'Files' => array('SortOrder' => 'Int')
 	);	
 	
 	private static $belongs_many_many = array(
@@ -27,8 +30,13 @@ class Block extends DataObject {
 	
 	private static $defaults = array(
 		'Template' => 'Default',
-		'Active' => 1
+		'Active' => 1,
+		'Page_Blocks.Sort' => 999
 	);
+
+	public function populateDefaults() {
+		parent::populateDefaults();
+	}
 
 	private static $summary_fields = array( 
 		'ID' => 'ID',
@@ -46,6 +54,13 @@ class Block extends DataObject {
 		'Active'
 	);
 
+	public function validate() {
+        $result = parent::validate();
+        if($this->Name == '') {
+            $result->error('A block must have a name');
+        }
+        return $result;
+    }
 	
 	public function getIsActive(){
 		return $this->Active ? 'Yes' : 'No';
@@ -58,41 +73,53 @@ class Block extends DataObject {
 		$fields->removeByName('Pages');
 		$fields->removeByName('Active');
 		$fields->removeByName('Header');
+		$fields->removeByName('Images');
+		$fields->removeByName('Files');
+
+		// Media tab
+		$fields->addFieldToTab('Root', new TabSet('Media'));
 
 		// If this Block belongs to more than one page, show a warning
 		$pcount = $this->Pages()->Count();
 		if($pcount > 1) {
 			$globalwarningfield = new LiteralField("IsGlobalBlockWarning", '<p class="message warning">This block is in use on '.$pcount.' pages - any changes made will also affect the block on these pages</p>');
 			$fields->addFieldToTab("Root.Main", $globalwarningfield, 'Name');
-			$fields->addFieldToTab("Root.Images", $globalwarningfield, 'Images');
+			$fields->addFieldToTab("Root.Media.Images", $globalwarningfield);
+			$fields->addFieldToTab("Root.Media.Files", $globalwarningfield);
+			$fields->addFieldToTab("Root.Media.Videos", $globalwarningfield);
 			$fields->addFieldToTab("Root.Template", $globalwarningfield);
 			$fields->addFieldToTab("Root.Settings", $globalwarningfield);
 		}
 		
-		
-		$thumbField = new UploadField('Images', 'Images');
-		$thumbField->allowedExtensions = array('jpg', 'gif', 'png');
+		$imgField = new SortableUploadField('Images', 'Images');
+		$imgField->allowedExtensions = array('jpg', 'gif', 'png');
 	
 		$fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name'));
 		$fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Use name as header', $this->dbObject('Header')->enumValues()), 'Content');
-		$fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));
+		$fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));			
 
-		// Image tab
-		$fields->addFieldsToTab("Root.Images", $thumbField);
+		$fields->addFieldToTab('Root.Media.Images', $imgField);
 		
+		$fileField = new SortableUploadField('Files', 'Files');
+
+		$fields->addFieldToTab('Root.Media.Files', $fileField); 
+		$fields->addFieldToTab('Root.Media.Video', new TextField('VideoURL', 'Video URL')); 
 		
 		// Template tab
 		$optionset = array();
 		$theme	= SSViewer::current_theme();
 		$src	= BASE_PATH . "/themes/".$theme."/templates/BlockTemplates/";
 		$imgsrc	= "/themes/".$theme."/templates/BlockTemplates/";
-		
+			
+		// TODO: If ClassName == Block, return the templates of the folder.
+		// If ClassName is something else (extension of block) then see if there is a folder with that name and only return templates from this folder
+
 		if(file_exists($src)) {
 			foreach (glob($src . "*.ss") as $filename) {	
 				$name = $this->file_ext_strip(basename($filename));
 				
 				// Is there a template thumbnail
-				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$imgsrc . $name . '.png" />' :  '<img src="' .$imgsrc . 'Blank.png" />'); // TODO: Perhaps just add blank as alt for image, no need to check for existance?
+				$thumbnail = (file_exists($src . $name . '.png') ? '<img src="' .$imgsrc . $name . '.png" />' : '<img src="' .$imgsrc . 'Blank.png" />'); // TODO: Perhaps just add blank as alt for image, no need to check for existance?
 				$html = '<div class="blockThumbnail">'.$thumbnail.'</div><strong class="title" title="Template file: '.$filename.'">'. $name .'</strong>';
 				$optionset[$name] = $html;
 			}
@@ -129,7 +156,7 @@ class Block extends DataObject {
 
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
-		// Run on dev buld		
+		// Run on dev build	- move to module file or why is it here?
 		
 		// If templates does not exist on current theme, copy from module
 		$theme = SSViewer::current_theme();
@@ -146,6 +173,7 @@ class Block extends DataObject {
 		}
 	}	
 
+	// Should only unlink if a block is on more than one page
 	public function canDelete($member = null) {
 		if(!$member || !(is_a($member, 'Member')) || is_numeric($member)) $member = Member::currentUser();
 
@@ -186,7 +214,14 @@ class Block extends DataObject {
 		}
 		closedir($dir);
 	}
-	
+
+	/* TODO: add function to calculate image widths based on columns? */
+	public function ColumnClass($totalitems) {
+		$totalcolumns	= 12; // should be configurable
+		$columns = $totalcolumns / $totalitems;
+		return $columns;
+	}
+
 	public function getThumbnail() { 
 		if ($this->Images()->Count() >= 1) {
 			return $this->Images()->First()->croppedImage(50,40);
@@ -194,6 +229,11 @@ class Block extends DataObject {
 	}	
 	
 	function forTemplate() {
+	
+		// can we include the Parent page for rendering? Perhaps use a checkbox in the CMS on the block if we should include the Page data.
+		// $page = Controller::curr();		
+		// return $this->customise(array('Page' => $page))->renderwith($this->Template); 
+		
 		return $this->renderWith($this->Template);
 	}
 
@@ -203,7 +243,7 @@ class Block extends DataObject {
 		return preg_replace('/^.*\./', '', $filename);
 	}
 	
-	// Returns the file name, less the extension.
+	// Returns the file name, without the extension.
 	function file_ext_strip($filename){
 		return preg_replace('/\.[^.]*$/', '', $filename);
 	}	

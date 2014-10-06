@@ -1,18 +1,20 @@
 <?php
 class Employee extends Block {
-    
-	static $db = array(
+
+	private static $singular_name = 'Employee';
+	private static $plural_name = 'Emplyees';	
+
+	private static $db = array(
 		'Name' => 'Varchar',
 		'Phone' => 'Varchar',
 		'Email' => 'Varchar'
     );
     
-	static $has_one = array(
+	private static $has_one = array(
     );
 
-	static $many_many = array(
+	private static $many_many = array(
     );
-	
 	
 	public function getCMSFields() {
 		

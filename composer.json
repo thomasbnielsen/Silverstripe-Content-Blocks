@@ -19,7 +19,8 @@
 		"silverstripe/cms": "~3.1",
 		"ajshort/silverstripe-gridfieldextensions": "dev-master",
 		"unclecheese/betterbuttons": "dev-master",
-		"bummzack/sortablefile": "dev-master"
+		"bummzack/sortablefile": "dev-master",
+		"jonom/focuspoint": "dev-master"
 	},
 	"extra": {
 		"installer-name": "content-blocks"

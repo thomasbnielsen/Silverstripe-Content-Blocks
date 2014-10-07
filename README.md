@@ -64,4 +64,4 @@ Or use Composer:
 - Build in template generator
 - Form blocks
 - Better previews (C/P from design)
-- Improve the "multiple classes" add button - block as default add option, arrow for dropdown to select other classes
+- Perhaps add foundation templates as a suggested composer requirement (and other CSS frameworks)

@@ -88,7 +88,7 @@ class Block extends DataObject {
 			$fields->addFieldToTab("Root.Main", $globalwarningfield, 'Name');
 			$fields->addFieldToTab("Root.Media.Images", $globalwarningfield);
 			$fields->addFieldToTab("Root.Media.Files", $globalwarningfield);
-			$fields->addFieldToTab("Root.Media.Videos", $globalwarningfield);
+			$fields->addFieldToTab("Root.Media.Video", $globalwarningfield);
 			$fields->addFieldToTab("Root.Template", $globalwarningfield);
 			$fields->addFieldToTab("Root.Settings", $globalwarningfield);
 		}

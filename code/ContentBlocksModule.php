@@ -13,14 +13,14 @@ class ContentBlocksModule extends DataExtension {
 	);
 	
 	private static $many_many_extraFields=array(
-        'Blocks'=>array('Sort'=>'Int')
+        'Blocks'=>array('SortOrder'=>'Int')
     );
 	
 	public function updateCMSFields(FieldList $fields) {
 
 		// Relation handler for Blocks		
 		$SConfig = GridFieldConfig_RelationEditor::create(25);
-		$SConfig->addComponent(new GridFieldOrderableRows());
+		$SConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
 		$SConfig->addComponent(new GridFieldDeleteAction());
 		
 		// If the copy button module is installed, add copy as option
@@ -55,7 +55,7 @@ class ContentBlocksModule extends DataExtension {
 	}
 
 	public function ActiveBlocks() {
-		return $this->owner->Blocks()->filter(array('Active' => '1'))->sort('Sort');
+		return $this->owner->Blocks()->filter(array('Active' => '1'))->sort('SortOrder');
 	}
 	
 	public function OneBlock($id) {

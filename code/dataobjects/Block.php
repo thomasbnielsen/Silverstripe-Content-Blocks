@@ -4,6 +4,8 @@ class Block extends DataObject {
 	private static $singular_name = 'Block';
 	private static $plural_name = 'Blocks';	
 
+	public static $default_sort = 'SortOrder';
+
 	private static $db = array(
         'Name' => 'Varchar',
 		'Header' => "Enum('None, h1, h2, h3, h4, h5, h6')",
@@ -29,12 +31,12 @@ class Block extends DataObject {
 	);
 	
 	private static $defaults = array(
-		'Template' => 'Default',
 		'Active' => 1,
-		'Page_Blocks.Sort' => 999
+		'Page_Blocks.SortOrder' => 999 // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
 	);
 
 	public function populateDefaults() {
+		$this->Template = $this->class;
 		parent::populateDefaults();
 	}
 
@@ -69,7 +71,7 @@ class Block extends DataObject {
 	public function getCMSFields() {
 		$fields = parent::getCMSFields();
 		
-		$fields->removeByName('Sort');
+		$fields->removeByName('SortOrder');
 		$fields->removeByName('Pages');
 		$fields->removeByName('Active');
 		$fields->removeByName('Header');
@@ -232,9 +234,8 @@ class Block extends DataObject {
 	
 		// can we include the Parent page for rendering? Perhaps use a checkbox in the CMS on the block if we should include the Page data.
 		// $page = Controller::curr();		
-		// return $this->customise(array('Page' => $page))->renderwith($this->Template); 
-		
-		return $this->renderWith($this->Template);
+		// return $this->customise(array('Page' => $page))->renderwith($this->Template);	
+		return $this->renderWith(array($this->Template, 'Block')); // Fall back to Block if selected does not exist
 	}
 
 	// Returns only the file extension (without the period).

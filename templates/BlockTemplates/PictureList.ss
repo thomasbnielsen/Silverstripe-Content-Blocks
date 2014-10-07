@@ -8,7 +8,7 @@
 	
 <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4"> 
 	<% if Images %>
-	<% loop Images.Sort('Sort') %>
+	<% loop Images.Sort('SortOrder') %>
 		<li>
 			<a href="$Me.CroppedFocusedImage(940,700).URL" class="th fancybox cboxElement">
 				$Me.CroppedFocusedImage(300,300)

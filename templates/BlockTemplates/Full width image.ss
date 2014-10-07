@@ -3,7 +3,7 @@
 	<% if $Header != "None" %><{$Header}>$Name</{$Header}><% end_if %>
 
     <% if Images %>
-        <% loop Images.Sort('Sort') %>
+        <% loop Images.Sort('SortOrder') %>
         	<a class="fancybox cboxElement" href="$Me.SetWidth(700).URL">
             $Me.SetWidth(1000)
             </a>

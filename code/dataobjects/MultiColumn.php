@@ -13,19 +13,24 @@ class MultiColumn extends Block {
     );
 	
 	private static $many_many_extraFields=array(
-        'Blocks'=>array('Sort'=>'Int')
+        'Blocks'=>array('SortOrder'=>'Int')
     );
+
+	private static $defaults = array(
+		'Template' => 'MultiColumn',
+	);
+
 	
 	public function getCMSFields() {
 		
 		$fields = parent::getCMSFields();
 		
-		$fields->removeByName(array('PageID','SortOrder', 'Header', 'Active', 'Title', 'Content', 'Blocks', 'YoutubeVideoID', 'Images', 'Media', 'Files', 'Videos'));
+		$fields->removeByName(array('PageID','SortOrder', 'Active', 'Title', 'Content', 'Blocks', 'YoutubeVideoID', 'Images', 'Media', 'Files', 'Videos'));
 
 
 		if ($this->ID) {
 			$BlockConfig = GridFieldConfig_RelationEditor::create(20);
-			$BlockConfig->addComponent(new GridFieldOrderableRows());
+			$BlockConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
 	
 			$BlockGF = new GridField('Blocks', 'Blocks', $this->Blocks(), $BlockConfig);
 	

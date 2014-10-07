@@ -1,6 +1,6 @@
 <?php
  
-class Block_Controller extends Controller {
+class BlockController extends Controller {
 
 	private static $allowed_actions = array(
 		'form',

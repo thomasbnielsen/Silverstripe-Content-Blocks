@@ -22,6 +22,9 @@
 		"bummzack/sortablefile": "dev-master",
 		"jonom/focuspoint": "dev-master"
 	},
+	"suggest": {
+		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations"
+	},
 	"extra": {
 		"installer-name": "content-blocks"
 	}

@@ -12,8 +12,10 @@ class ContentBlocksModule extends DataExtension {
 		'Blocks' => 'Block'
 	);
 	
-	private static $many_many_extraFields=array(
-        'Blocks'=>array('SortOrder'=>'Int')
+	private static $many_many_extraFields = array(
+        'Blocks' => array(
+			'SortOrder'=>'Int'
+		)
     );
 	
 	public function updateCMSFields(FieldList $fields) {

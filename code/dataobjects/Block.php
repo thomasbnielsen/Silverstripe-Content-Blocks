@@ -3,8 +3,9 @@ class Block extends DataObject {
     
 	private static $singular_name = 'Block';
 	private static $plural_name = 'Blocks';	
+	private static $first_write = false;
 
-	public static $default_sort = 'SortOrder';
+	//public static $default_sort = 'SortOrder';
 
 	private static $db = array(
         'Name' => 'Varchar',
@@ -32,11 +33,12 @@ class Block extends DataObject {
 	
 	private static $defaults = array(
 		'Active' => 1,
-		'Page_Blocks.SortOrder' => 999 // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
+		'Page_Blocks[SortOrder]' => 999 // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
 	);
 
 	public function populateDefaults() {
 		$this->Template = $this->class;
+				
 		parent::populateDefaults();
 	}
 
@@ -82,6 +84,7 @@ class Block extends DataObject {
 		$fields->addFieldToTab('Root', new TabSet('Media'));
 
 		// If this Block belongs to more than one page, show a warning
+		// TODO: This is not working when a block is added under another block
 		$pcount = $this->Pages()->Count();
 		if($pcount > 1) {
 			$globalwarningfield = new LiteralField("IsGlobalBlockWarning", '<p class="message warning">This block is in use on '.$pcount.' pages - any changes made will also affect the block on these pages</p>');
@@ -154,6 +157,15 @@ class Block extends DataObject {
 	function onBeforeWrite() {
 		parent::onBeforeWrite();
 		
+		if (!$this->ID) {
+			$this->first_write = true;
+		}
+		
+	}
+
+	function onAfterWrite() {
+		parent::onAfterWrite();
+				
 	}
 
 	function requireDefaultRecords() {

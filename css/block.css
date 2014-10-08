@@ -1,45 +1,25 @@
-.imgRightWrap img { 
-	float: right; 
-	max-width: 100%; 
-	margin: 5px 0px 0px 15px; 
-}
+/* Styling for simple Theme */
+/* Just remove the line Requirements::themedCSS('block'); from ContentBlocksModule.php if you are using your own, or delete what you dont need here */
 
-.imgLeftWrap img { 
-	float: left; 
-	max-width: 100%; 
-	margin: 5px 15px 0px 0px; 
-}
+/* Zurb Foundation minimum for grid */
+img{display:block;max-width:100%}*, *:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}.row{width:100%;margin:0 auto;max-width:62.5rem}.row:after,.row:before{content:" ";display:table}.row:after{clear:both}.row.collapse>.column,.row.collapse>.columns{padding-left:0;padding-right:0}.row.collapse .row{margin-left:0;margin-right:0}.row .row{width:auto;margin:0 -.9375rem;max-width:none}.row .row:after,.row .row:before{content:" ";display:table}.row .row:after{clear:both}.row .row.collapse{width:auto;margin:0;max-width:none}.row .row.collapse:after,.row .row.collapse:before{content:" ";display:table}.row .row.collapse:after{clear:both}.column,.columns{padding-left:.9375rem;padding-right:.9375rem;width:100%;float:left}@media only screen{.column,.columns{position:relative;padding-left:.9375rem;padding-right:.9375rem;float:left}.small-1{width:8.33333%}.small-2{width:16.66667%}.small-3{width:25%}.small-4{width:33.33333%}.small-5{width:41.66667%}.small-6{width:50%}.small-7{width:58.33333%}.small-8{width:66.66667%}.small-9{width:75%}.small-10{width:83.33333%}.small-11{width:91.66667%}.small-12{width:100%}[class*=column]+[class*=column]:last-child{float:right}[class*=column]+[class*=column].end{float:left}}@media only screen and (min-width:40.063em){.column,.columns{position:relative;padding-left:.9375rem;padding-right:.9375rem;float:left}.medium-1{width:8.33333%}.medium-2{width:16.66667%}.medium-3{width:25%}.medium-4{width:33.33333%}.medium-5{width:41.66667%}.medium-6{width:50%}.medium-7{width:58.33333%}.medium-8{width:66.66667%}.medium-9{width:75%}.medium-10{width:83.33333%}.medium-11{width:91.66667%}.medium-12{width:100%}[class*=column]+[class*=column]:last-child{float:right}[class*=column]+[class*=column].end{float:left}}@media only screen and (min-width:64.063em){.column,.columns{position:relative;padding-left:.9375rem;padding-right:.9375rem;float:left}.large-1{width:8.33333%}.large-2{width:16.66667%}.large-3{width:25%}.large-4{width:33.33333%}.large-5{width:41.66667%}.large-6{width:50%}.large-7{width:58.33333%}.large-8{width:66.66667%}.large-9{width:75%}.large-10{width:83.33333%}.large-11{width:91.66667%}.large-12{width:100%}[class*=column]+[class*=column]:last-child{float:right}[class*=column]+[class*=column].end{float:left}}
 
-.blocks .row {
-	margin-bottom: 20px;
-}
+/**/
+.row { margin-bottom: 0.9375rem; }
 
-p {
-	font-size: 12px;
-
-}
-
-.wrapimgleft.columns {
-	float: left;
-	margin: 0 0.7rem 0.7rem 0;
-	padding-left: 0;
-}
-
-.wrapimgright.columns {
-	float: right;
-	margin: 0 0 0.7rem 0.7rem;
-	padding-right: 0;
-}
-
+/* CSS for wrapping text around images */
+.block-wrap	{ display: block; }
+.block-wrap.block-left { float: left; padding-left: 0; }
+.block-wrap.block-right { float: right; padding-right: 0; }
 
 @media only screen and (max-width: 40em) {
-	.wrapimgleft.columns {
+	.block-wrap.block-left {
 		float: none;
 		margin: 0;
 		padding: 0;
 	}
 	
-	.wrapimgright.columns {
+	.block-wrap.block-right {
 		float: none;
 		margin: 0;
 		padding: 0;

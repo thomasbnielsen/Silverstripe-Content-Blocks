@@ -6,7 +6,7 @@
 	<div class="small-12 columns">
         <% if Images %>
             <% loop Images.Sort('SortOrder') %>
-                <a class="wrapimgleft small-12 medium-6 columns" href="$Me.SetWidth(700).URL">
+                <a class="small-12 medium-6 columns block-left block-wrap" href="$Me.SetWidth(700).URL">
                		 $Me.CroppedFocusedImage(600,600)
                 </a>
             <% end_loop %>

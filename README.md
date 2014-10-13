@@ -54,6 +54,19 @@ Or use Composer:
 - allways run dev/build?flush=1 after adding templates
 - remember to ?flush=1 after modification of templates
 
+### Screenshots
+
+![Overview](docs/images/overview.png)
+Overview in page editing
+
+![modeladmin](docs/images/modeladmin.png)
+View all blocks across pages in a ModelAdmin
+
+![](docs/images/detail_main.png)
+![](docs/images/detail_media.png)
+![](docs/images/detail_template.png)
+Detail views
+
 ### TODO: ###
 - Option to add more content placeholders without coding - site config?
 - Handle search

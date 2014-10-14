@@ -6,7 +6,7 @@ BetterButtonsUtils:
     BetterButtonPrevNextAction: true
     BetterButton_New: false
   versioned_edit:
-    BetterButton_PrevNext: true
+    BetterButtonPrevNextAction: true
     BetterButton_New: true
 
 BetterButtonsActions:

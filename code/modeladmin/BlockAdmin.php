@@ -6,5 +6,6 @@ class BlockAdmin extends ModelAdmin {
 	);
     private static $menu_title = 'Blocks'; 
 	private static $url_segment = 'blocks';
+	
 	//private static $menu_icon = 'sectionmodule/icon.png';
 }

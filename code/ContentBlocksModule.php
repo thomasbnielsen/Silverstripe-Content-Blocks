@@ -65,7 +65,7 @@ class ContentBlocksModule extends DataExtension {
 	}	
 	
 	// Run on dev buld
-	function requireDefaultRecords() {
+/*	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
 		
 		// If css file does not exist on current theme, copy from module
@@ -82,11 +82,11 @@ class ContentBlocksModule extends DataExtension {
 			}
 		}
 	}	
-	
-	public function contentcontrollerInit($controller) {
+*/	
+/*	public function contentcontrollerInit($controller) {
 		Requirements::themedCSS('block');
 	}
-
+*/
 	/**
 	* Simple support for Translatable, when a page is translated, copy all content blocks and relate to translated page
 	* TODO: This is not working as intended, for some reason an image is added to the duplicated block

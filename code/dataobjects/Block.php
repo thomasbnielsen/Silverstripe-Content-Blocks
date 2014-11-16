@@ -168,7 +168,7 @@ class Block extends DataObject {
 				
 	}
 
-	function requireDefaultRecords() {
+/*	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
 		// Run on dev build	- move to module file or why is it here?
 		
@@ -186,7 +186,7 @@ class Block extends DataObject {
 			}
 		}
 	}	
-
+*/
 	// Should only unlink if a block is on more than one page
 	public function canDelete($member = null) {
 		if(!$member || !(is_a($member, 'Member')) || is_numeric($member)) $member = Member::currentUser();
@@ -213,7 +213,7 @@ class Block extends DataObject {
 		return $this->canEdit($member);
 	}
 
-	function recurse_copy($src,$dst) {
+/*	function recurse_copy($src,$dst) {
 		$dir = opendir($src);
 		@mkdir($dst);
 		while(false !== ( $file = readdir($dir)) ) {
@@ -228,7 +228,7 @@ class Block extends DataObject {
 		}
 		closedir($dir);
 	}
-
+*/
 	/* TODO: add function to calculate image widths based on columns? */
 	public function ColumnClass($totalitems) {
 		$totalcolumns	= 12; // should be configurable

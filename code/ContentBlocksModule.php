@@ -26,7 +26,7 @@ class ContentBlocksModule extends DataExtension {
 		$SConfig->addComponent(new GridFieldDeleteAction());
 		
 		// If the copy button module is installed, add copy as option
-		if (class_exists('GridFieldCopyButton')) { // Is this bugged still? copy action not allowed
+		if (class_exists('GridFieldCopyButton')) {
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
 

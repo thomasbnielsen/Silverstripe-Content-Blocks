@@ -19,9 +19,9 @@
         "silverstripe/framework": "~3.1",
 		"silverstripe/cms": "~3.1",
 		"silverstripe-australia/gridfieldextensions": "~1.0",
-		"unclecheese/betterbuttons": "dev-master",
-		"bummzack/sortablefile": "dev-master",
-		"jonom/focuspoint": "dev-master"
+		"unclecheese/betterbuttons": "1.2.*",
+		"bummzack/sortablefile": "1.0.*",
+		"jonom/focuspoint": "1.0.*"
 	},
 	"suggest": {
 		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations"

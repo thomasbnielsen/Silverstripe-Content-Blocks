@@ -23,7 +23,8 @@
 		"bummzack/sortablefile": "1.0.*",
 	},
 	"suggest": {
-		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations"
+		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations",
+		"jonom/focuspoint": "Crop an image based on a focus point"
 	},
 	"extra": {
 		"installer-name": "content-blocks"

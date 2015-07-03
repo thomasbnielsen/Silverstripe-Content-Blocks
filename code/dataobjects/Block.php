@@ -42,6 +42,22 @@ class Block extends DataObject {
 		parent::populateDefaults();
 	}
 
+	public function canView($member=null) {
+		return Permission::check('ADMIN') || Permission::check('CMS_ACCESS_BlockAdmin') || Permission::check('CMS_ACCESS_LeftAndMain') ;
+	}
+
+	public function canEdit($member=null) {
+		return Permission::check('ADMIN') || Permission::check('CMS_ACCESS_BlockAdmin') || Permission::check('CMS_ACCESS_LeftAndMain') ;
+	}
+
+	public function canCreate($member=null) {
+		return Permission::check('ADMIN') || Permission::check('CMS_ACCESS_BlockAdmin') || Permission::check('CMS_ACCESS_LeftAndMain') ;
+	}
+
+	public function canPublish($member=null) {
+		return Permission::check('ADMIN') || Permission::check('CMS_ACCESS_BlockAdmin') || Permission::check('CMS_ACCESS_LeftAndMain') ;
+	}
+
 	private static $summary_fields = array( 
 		'ID' => 'ID',
 		'Thumbnail' => 'Thumbnail',

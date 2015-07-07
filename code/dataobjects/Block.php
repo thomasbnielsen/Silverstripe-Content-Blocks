@@ -1,25 +1,25 @@
 <?php
 class Block extends DataObject {
     
-	private static $singular_name = 'Block';
-	private static $plural_name = 'Blocks';	
+	// private static $singular_name = 'Block';
+	// private static $plural_name = 'Blocks';	
 	private static $first_write = false;
 
 	//public static $default_sort = 'SortOrder';
 
 	private static $db = array(
-        'Name' => 'Varchar',
-		'Header' => "Enum('None, h1, h2, h3, h4, h5, h6')",
-		'Content' => 'HTMLText',
-        'Link' => 'Varchar',
-		'VideoURL' => 'Varchar',
-		'Template' => 'Varchar',
-		'Active' => 'Boolean(1)'
+		'Name' 		=> 'Varchar',
+		'Header' 	=> "Enum('None, h1, h2, h3, h4, h5, h6')",
+        'Link' 		=> 'Varchar',
+		'VideoURL' 	=> 'Varchar',
+		'Template' 	=> 'Varchar',
+		'Active' 	=> 'Boolean(1)'
     );
-    
+
 	private static $many_many = array(
 		'Images' => 'Image',
-		'Files' => 'File'
+		'Files' => 'File',
+		'BlockTranslations' => 'BlockTranslation'
     );
 	
 	private static $many_many_extraFields = array(
@@ -30,7 +30,7 @@ class Block extends DataObject {
 	private static $belongs_many_many = array(
 		'Pages' => 'Page'
 	);
-	
+
 	private static $defaults = array(
 		'Active' => 1,
 		'Page_Blocks[SortOrder]' => 999 // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
@@ -64,7 +64,7 @@ class Block extends DataObject {
 		'Name' => 'Name',
 		'Template' => 'Template',
 		'ClassName' => 'Type',
-		'getIsActive' => 'Active'
+		'getIsActive' => 'Active',
 	);
 	
 	private static $searchable_fields = array(
@@ -95,6 +95,22 @@ class Block extends DataObject {
 		$fields->removeByName('Header');
 		$fields->removeByName('Images');
 		$fields->removeByName('Files');
+		$fields->removeByName('BlockTranslationsID');
+		$fields->removeByName('BlockTranslations');
+
+		//Translations
+		foreach (json_decode(SS_LANGUAGES) as $key => $lang) {
+			$existingTrans = (object)['Title' => null, 'Content' => null];
+			if ($this->ID) {
+				$existingTrans = BlockTranslation::get()->filter([
+					'BlockID' => $this->ID,
+					'Language' => $key
+				])->first();
+			}
+
+		  	$fields->addFieldsToTab("Root.".$lang, new TextField('Title-'.$key, 'Title', $existingTrans->Title));
+		  	$fields->addFieldsToTab("Root.".$lang, new TextareaField('Content-'.$key, 'Content', $existingTrans->Content));
+		}
 
 		// Media tab
 		$fields->addFieldToTab('Root', new TabSet('Media'));
@@ -115,9 +131,9 @@ class Block extends DataObject {
 		$imgField = new SortableUploadField('Images', 'Images');
 		$imgField->allowedExtensions = array('jpg', 'gif', 'png');
 	
-		$fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name'));
+		$fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name of block'));
 		$fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Use name as header', $this->dbObject('Header')->enumValues()), 'Content');
-		$fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));			
+		// $fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));			
 
 		$fields->addFieldToTab('Root.Media.Images', $imgField);
 		
@@ -275,5 +291,39 @@ class Block extends DataObject {
 	// Returns the file name, without the extension.
 	function file_ext_strip($filename){
 		return preg_replace('/\.[^.]*$/', '', $filename);
-	}	
+	}
+
+	public function write()
+	{
+		$record = $this->record;
+		$id = parent::write();
+
+		foreach (json_decode(SS_LANGUAGES) as $slang => $lang) {
+			$existingTrans = BlockTranslation::get()->filter([
+				'BlockID' => $id,
+				'Language' => $slang
+			])->first();
+
+			$trans = [
+				'Language' => $slang
+			];
+			foreach ($this->record as $key => $value) {
+				if (strpos($key, $slang) !== false) {
+					$key = explode('-', $key);
+					$trans[$key[0]] = $value;
+				}
+			}
+
+			if ($existingTrans) {
+				DB::query('UPDATE "BlockTranslation" SET "Title"=\''.$trans['Title'].'\', "Content"=\''.$trans['Content'].'\' WHERE "ID" = '.$existingTrans->ID.';');
+			} else {
+				$newTrans = BlockTranslation::create();
+				$newTrans->Title = $trans['Title'];
+				$newTrans->Content = $trans['Content'];
+				$newTrans->Language = $slang;
+				$newTrans->BlockID = $id;
+				$newTrans->write();
+			}
+		}
+	}
 }

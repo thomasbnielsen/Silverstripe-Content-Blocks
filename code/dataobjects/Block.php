@@ -272,14 +272,6 @@ class Block extends DataObject {
 		if ($this->Images()->Count() >= 1) {
 			return $this->Images()->First()->croppedImage(50,40);
 		}
-	}	
-	
-	function forTemplate() {
-	
-		// can we include the Parent page for rendering? Perhaps use a checkbox in the CMS on the block if we should include the Page data.
-		// $page = Controller::curr();		
-		// return $this->customise(array('Page' => $page))->renderwith($this->Template);	
-		return $this->renderWith(array($this->Template, 'Block')); // Fall back to Block if selected does not exist
 	}
 
 	// Returns only the file extension (without the period).

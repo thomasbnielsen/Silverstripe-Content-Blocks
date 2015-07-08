@@ -55,9 +55,24 @@ class ContentBlocksModule extends DataExtension {
 	public function ActiveBlocks() {
 		return $this->owner->Blocks()->filter(array('Active' => '1'))->sort('SortOrder');
 	}
+
+	protected function fetchBlockTrans($id, $lang) {
+		return BlockTranslation::get()
+			->filter([
+				'BlockID' => $id,
+				'Language' => $lang
+			])->first();
+	}
 	
 	public function OneBlock($id) {
-		return Block::get()->byID($id);
+		$lang = i18n::get_locale();
+
+		$blockTrans = $this->fetchBlockTrans($id, $lang);
+		if (count($blockTrans) === 0) {
+			$blockTrans = $this->fetchBlockTrans($id, 'en_US');
+		}
+
+		return $blockTrans;
 	}	
 	
 	// Run on dev buld

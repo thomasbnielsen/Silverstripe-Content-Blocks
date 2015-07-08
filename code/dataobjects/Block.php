@@ -13,7 +13,8 @@ class Block extends DataObject {
         'Link' 		=> 'Varchar',
 		'VideoURL' 	=> 'Varchar',
 		'Template' 	=> 'Varchar',
-		'Active' 	=> 'Boolean(1)'
+		'Active' 	=> 'Boolean(1)',
+		'Classes' 	=> 'Text'
     );
 
 	private static $many_many = array(
@@ -133,7 +134,7 @@ class Block extends DataObject {
 	
 		$fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name of block'));
 		$fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Use name as header', $this->dbObject('Header')->enumValues()), 'Content');
-		// $fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));			
+		$fields->addFieldsToTab("Root.Main", new TextField('Classes', 'Classes'));
 
 		$fields->addFieldToTab('Root.Media.Images', $imgField);
 		

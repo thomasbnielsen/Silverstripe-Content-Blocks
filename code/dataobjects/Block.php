@@ -110,7 +110,13 @@ class Block extends DataObject {
 			}
 
 		  	$fields->addFieldsToTab("Root.".$lang, new TextField('Title-'.$key, 'Title', $existingTrans->Title));
-		  	$fields->addFieldsToTab("Root.".$lang, new TextareaField('Content-'.$key, 'Content', $existingTrans->Content));
+
+		  	if (SS_BLOCK_RTE) {
+		  		$fields->addFieldsToTab("Root.".$lang, new HTMLEditorField('Content-'.$key, 'Content', $existingTrans->Content));
+		  	} else {
+		  		$fields->addFieldsToTab("Root.".$lang, new TextareaField('Content-'.$key, 'Content', $existingTrans->Content));
+		  	}
+
 		}
 
 		// Media tab

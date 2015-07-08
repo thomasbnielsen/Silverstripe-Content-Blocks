@@ -287,34 +287,35 @@ class Block extends DataObject {
 
 	public function write()
 	{
-		$record = $this->record;
 		$id = parent::write();
 
 		foreach (json_decode(SS_LANGUAGES) as $slang => $lang) {
-			$existingTrans = BlockTranslation::get()->filter([
-				'BlockID' => $id,
-				'Language' => $slang
-			])->first();
+			if (isset($this->record['Title-'.$slang])) {
+				$existingTrans = BlockTranslation::get()->filter([
+					'BlockID' => $id,
+					'Language' => $slang
+				])->first();
 
-			$trans = [
-				'Language' => $slang
-			];
-			foreach ($this->record as $key => $value) {
-				if (strpos($key, $slang) !== false) {
-					$key = explode('-', $key);
-					$trans[$key[0]] = $value;
+				$trans = [
+					'Language' => $slang
+				];
+				foreach ($this->record as $key => $value) {
+					if (strpos($key, $slang) !== false) {
+						$key = explode('-', $key);
+						$trans[$key[0]] = $value;
+					}
 				}
-			}
 
-			if ($existingTrans) {
-				DB::query('UPDATE "BlockTranslation" SET "Title"=\''.$trans['Title'].'\', "Content"=\''.$trans['Content'].'\' WHERE "ID" = '.$existingTrans->ID.';');
-			} else {
-				$newTrans = BlockTranslation::create();
-				$newTrans->Title = $trans['Title'];
-				$newTrans->Content = $trans['Content'];
-				$newTrans->Language = $slang;
-				$newTrans->BlockID = $id;
-				$newTrans->write();
+				if ($existingTrans) {
+					DB::query('UPDATE "BlockTranslation" SET "Title"=\''.$trans['Title'].'\', "Content"=\''.$trans['Content'].'\' WHERE "ID" = '.$existingTrans->ID.';');
+				} else {
+					$newTrans = BlockTranslation::create();
+					$newTrans->Title = $trans['Title'];
+					$newTrans->Content = $trans['Content'];
+					$newTrans->Language = $slang;
+					$newTrans->BlockID = $id;
+					$newTrans->write();
+				}
 			}
 		}
 	}

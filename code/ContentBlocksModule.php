@@ -94,8 +94,9 @@ class ContentBlocksModule extends DataExtension {
 		}
 	}	
 	
+	//TO-DO
 	public function contentcontrollerInit($controller) {
-		Requirements::themedCSS('block');
+		// Requirements::themedCSS('block');
 	}
 
 	/**

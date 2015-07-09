@@ -19,8 +19,7 @@ class Block extends DataObject {
 
 	private static $many_many = array(
 		'Images' => 'Image',
-		'Files' => 'File',
-		'BlockTranslations' => 'BlockTranslation'
+		'Files' => 'File'
     );
 	
 	private static $many_many_extraFields = array(
@@ -31,6 +30,10 @@ class Block extends DataObject {
 	private static $has_one = array(
 		'Page' => 'Page'
 	);
+
+	private static $has_many = array(
+        'BlockTranslations' => 'BlockTranslation'
+    );
 
 	private static $defaults = array(
 		'Active' => 1,
@@ -101,7 +104,6 @@ class Block extends DataObject {
 
 		//Translations
 		foreach (json_decode(SS_LANGUAGES) as $key => $lang) {
-			$existingTrans = (object)['Title' => null, 'Content' => null];
 			if ($this->ID) {
 				$existingTrans = BlockTranslation::get()->filter([
 					'BlockID' => $this->ID,
@@ -109,31 +111,18 @@ class Block extends DataObject {
 				])->first();
 			}
 
-		  	$fields->addFieldsToTab("Root.".$lang, new TextField('Title-'.$key, 'Title', $existingTrans->Title));
+		  	$fields->addFieldsToTab("Root.".$lang, new TextField('Title-'.$key, 'Title', isset($existingTrans->Title) ? $existingTrans->Title : ''));
 
 		  	if (SS_BLOCK_RTE) {
-		  		$fields->addFieldsToTab("Root.".$lang, new HTMLEditorField('Content-'.$key, 'Content', $existingTrans->Content));
+		  		$fields->addFieldsToTab("Root.".$lang, new HTMLEditorField('Content-'.$key, 'Content', isset($existingTrans->Content) ? $existingTrans->Content : ''));
 		  	} else {
-		  		$fields->addFieldsToTab("Root.".$lang, new TextareaField('Content-'.$key, 'Content', $existingTrans->Content));
+		  		$fields->addFieldsToTab("Root.".$lang, new TextareaField('Content-'.$key, 'Content', isset($existingTrans->Content) ? $existingTrans->Content : ''));
 		  	}
 
 		}
 
 		// Media tab
 		$fields->addFieldToTab('Root', new TabSet('Media'));
-
-		// If this Block belongs to more than one page, show a warning
-		// TODO: This is not working when a block is added under another block
-		$pcount = $this->Pages()->Count();
-		if($pcount > 1) {
-			$globalwarningfield = new LiteralField("IsGlobalBlockWarning", '<p class="message warning">This block is in use on '.$pcount.' pages - any changes made will also affect the block on these pages</p>');
-			$fields->addFieldToTab("Root.Main", $globalwarningfield, 'Name');
-			$fields->addFieldToTab("Root.Media.Images", $globalwarningfield);
-			$fields->addFieldToTab("Root.Media.Files", $globalwarningfield);
-			$fields->addFieldToTab("Root.Media.Video", $globalwarningfield);
-			$fields->addFieldToTab("Root.Template", $globalwarningfield);
-			$fields->addFieldToTab("Root.Settings", $globalwarningfield);
-		}
 		
 		$imgField = new SortableUploadField('Images', 'Images');
 		$imgField->allowedExtensions = array('jpg', 'gif', 'png');
@@ -186,9 +175,8 @@ class Block extends DataObject {
 		
 		$PagesConfig = GridFieldConfig_RelationEditor::create(10);
 		$PagesConfig->removeComponentsByType('GridFieldAddNewButton');
-		$gridField = new GridField("Pages", "Related pages (This block is used on the following pages)", $this->Pages(), $PagesConfig);
 		
-		$fields->addFieldToTab("Root.Settings", $gridField);
+		// $fields->addFieldToTab("Root.Settings", $gridField);
 		
 		return $fields;
 	}	
@@ -241,15 +229,7 @@ class Block extends DataObject {
 		// No member found
 		if(!($member && $member->exists())) return false;
 		
-		$pcount = $this->Pages()->Count();
-		if($pcount > 1) {
-			return false;
-		} else {
-			return true;
-		}
-		
-		
-		return $this->canEdit($member);
+		return true;
 	}
 
 	function recurse_copy($src,$dst) {

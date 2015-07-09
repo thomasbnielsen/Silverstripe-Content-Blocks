@@ -13,15 +13,24 @@ class InsertBlocks extends BuildTask {
     	//Loop through all blocks, defined in root/BlockFiller.php
     	foreach ($data as $key => $blockData) {
 	    	$block = Block::create($blockData);
-	    	$block->write();
 
-    		//Loop through all blocks translations, which are defined in block section under 'trans'
-	    	foreach ($blockData['trans'] as $key => $translation) {
-		    	$blockTrans = BlockTranslation::create($translation);
-		    	$blockTrans->BlockID = $block->ID;
-		    	$blockTrans->write();
-	    	}
+            $page = Page::get()->filter([
+                    'ClassName' => $blockData['classname']
+                ])->first();
+            
+            if (isset($page->ID)) {
+                $block->write();
+                $page->Blocks()->add($block);
+                $block->write();
+
+        		//Loop through all blocks translations, which are defined in block section under 'trans'
+    	    	foreach ($blockData['trans'] as $key => $translation) {
+    		    	$blockTrans = BlockTranslation::create($translation);
+    		    	$blockTrans->BlockID = $block->ID;
+    		    	$blockTrans->write();
+    	    	}
+
+            }
     	}
-
     }
 }

@@ -4,7 +4,7 @@
 	"type": "silverstripe-module",
 	"homepage": "https://github.com/Kendu/Silverstripe-Content-Blocks",
 	"keywords": ["silverstripe", "section", "sections", "blocks", "content"],
-	"license": "BSD-3-Clause",
+	"license": "Apache License 2.0",
 	"authors": [
 		{
 			"name": "Kendu team",

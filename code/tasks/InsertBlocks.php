@@ -10,6 +10,12 @@ class InsertBlocks extends BuildTask {
     function run($request) {
     	$data = require_once(__DIR__.'/../../../BlockFiller.php');
 
+        if ($data) {
+            foreach(Block::get() as $block) {
+                $block->delete();
+            }
+        }
+
     	//Loop through all blocks, defined in root/BlockFiller.php
     	foreach ($data as $key => $blockData) {
 	    	$block = Block::create($blockData);

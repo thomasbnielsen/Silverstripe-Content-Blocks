@@ -14,10 +14,12 @@ class InsertBlocks extends BuildTask {
     	foreach ($data as $key => $blockData) {
 	    	$block = Block::create($blockData);
 
+            //Find page by classname, so it can link block to page
             $page = Page::get()->filter([
-                    'ClassName' => $blockData['classname']
+                    'ClassName' => $blockData['ClassName']
                 ])->first();
             
+            //If page is found, write block
             if (isset($page->ID)) {
                 $block->write();
                 $page->Blocks()->add($block);

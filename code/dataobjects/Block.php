@@ -195,25 +195,6 @@ class Block extends DataObject {
 				
 	}
 
-	function requireDefaultRecords() {
-		parent::requireDefaultRecords();
-		// Run on dev build	- move to module file or why is it here?
-		
-		// If templates does not exist on current theme, copy from module
-		$theme = SSViewer::current_theme();
-		$copyto    = "../themes/".$theme."/templates/".CONTENTBLOCKS_TEMPLATE_DIR."/";
-		
-		if(!file_exists($copyto)) {
-			$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/templates/".CONTENTBLOCKS_TEMPLATE_DIR."/";
-			if(file_exists($copyfrom)) {
-				$this->recurse_copy($copyfrom, $copyto);
-				echo '<li style="color: green">BlockTemplates copied to: '.$copyto.'</li>';
-			} else {
-				echo "The default template archive was not found: " . $copyfrom;
-			}
-		}
-	}	
-
 	// Should only unlink if a block is on more than one page
 	public function canDelete($member = null) {
 		if(!$member || !(is_a($member, 'Member')) || is_numeric($member)) $member = Member::currentUser();
@@ -230,22 +211,6 @@ class Block extends DataObject {
 		if(!($member && $member->exists())) return false;
 		
 		return true;
-	}
-
-	function recurse_copy($src,$dst) {
-		$dir = opendir($src);
-		@mkdir($dst);
-		while(false !== ( $file = readdir($dir)) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ) {
-					$this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
-				}
-				else {
-					copy($src . '/' . $file,$dst . '/' . $file);
-				}
-			}
-		}
-		closedir($dir);
 	}
 
 	/* TODO: add function to calculate image widths based on columns? */

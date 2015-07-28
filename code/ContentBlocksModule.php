@@ -81,26 +81,7 @@ class ContentBlocksModule extends DataExtension {
 		}
 
 		return $blockTrans;
-	}	
-	
-	// Run on dev buld
-	function requireDefaultRecords() {
-		parent::requireDefaultRecords();
-		
-		// If css file does not exist on current theme, copy from module
-		$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/css/block.css";
-		$theme = SSViewer::current_theme();
-		$copyto    = BASE_PATH . "/themes/".$theme."/css/block.css";
-		
-		if(!file_exists($copyto)) {
-			if(file_exists($copyfrom)) {
-				copy($copyfrom,$copyto);
-				echo '<li style="green: green">block.css copied to: ' . $copyto . '</li>';
-			} else {
-				echo '<li style="red">The default css file was not found: ' . $copyfrom . '</li>';
-			}
-		}
-	}	
+	}
 	
 	//TO-DO
 	public function contentcontrollerInit($controller) {

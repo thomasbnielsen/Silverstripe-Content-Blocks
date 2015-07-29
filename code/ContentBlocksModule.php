@@ -103,7 +103,5 @@ class ContentBlocksModule extends DataExtension {
 			$block = $originalBlock->duplicate(true);
 			$translatedPage->Blocks()->add($block);
 		}
-
-	}	
-	
+	}
 }

@@ -11,6 +11,17 @@ class BlockTranslation extends DataObject {
 	);
 
 	function forTemplate() {
-		return $this->renderWith(array($this->Template, 'Block')); // Fall back to Block if selected does not exist
+		$block = Block::get()->filter(['ID' => $this->BlockID])->first();
+			
+		return $this->renderWith([$block->Template, 'Block']); // Fall back to Block if selected does not exist
+	}
+
+	public function Images()
+	{
+		if ($this->Block()->Images()->Count() >= 1) {
+			return $this->Block()->Images();
+		}
+
+		return false;
 	}
 }

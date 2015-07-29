@@ -140,7 +140,7 @@ class Block extends DataObject {
 		
 		// Template tab
 		$optionset = array();
-		$theme	= SSViewer::current_theme();
+		$theme	= SS_PROJ_DEFAULT_THEME;
 		$src	= BASE_PATH . "/themes/".$theme."/templates/BlockTemplates/";
 		$imgsrc	= "/themes/".$theme."/templates/BlockTemplates/";
 			

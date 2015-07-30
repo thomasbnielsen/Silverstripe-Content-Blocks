@@ -37,7 +37,7 @@ class InsertBlocks extends BuildTask {
     		    	$blockTrans->BlockID = $block->ID;
     		    	$blockTrans->write();
     	    	}
-
+            var_dump($block->Title);
             }
     	}
     }

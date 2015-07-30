@@ -40,12 +40,6 @@ class Block extends DataObject {
 		'Page_Blocks[SortOrder]' => 999 // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
 	);
 
-	public function populateDefaults() {
-		$this->Template = $this->class;
-				
-		parent::populateDefaults();
-	}
-
 	public function canView($member=null) {
 		return Permission::check('ADMIN') || Permission::check('CMS_ACCESS_BlockAdmin') || Permission::check('CMS_ACCESS_LeftAndMain') ;
 	}

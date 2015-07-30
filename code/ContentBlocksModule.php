@@ -56,8 +56,7 @@ class ContentBlocksModule extends DataExtension {
 		return $this->owner->Blocks()->filter(array('Active' => '1'))->sort('SortOrder');
 	}
 
-	protected function fetchBlockTrans($name, $lang) {
-		$block = Block::get()->filter(['Name' => $name])->first();
+	protected function fetchBlockTrans($block, $lang) {
 
 		if ($block) {
 			return BlockTranslation::get()
@@ -69,18 +68,53 @@ class ContentBlocksModule extends DataExtension {
 
 		return null;
 	}
-	
-	public function OneBlock($name) {
+
+	protected function findBlockTranslation($block)
+	{
 		$lang = i18n::get_locale();
 
-		$blockTrans = $this->fetchBlockTrans($name, $lang);
+		$blockTrans = $this->fetchBlockTrans($block, $lang);
 
 		//Fallback to english if there is no translation for language
 		if (count($blockTrans) === 0) {
-			$blockTrans = $this->fetchBlockTrans($name, 'en_US');
+			$blockTrans = $this->fetchBlockTrans($block, 'en_US');
 		}
 
 		return $blockTrans;
+	}
+	
+	public function OneBlock($name)
+	{
+		$block = Block::get()->filter(['Name' => $name])->first();
+
+		return $this->findBlockTranslation($block);
+	}
+
+	public function OneBlockID($id)
+	{
+		$block = Block::get()->filter(['ID' => $id])->first();
+
+		return $this->findBlockTranslation($block);
+	}
+
+	public function MultiBlock($name)
+	{
+		$lang = i18n::get_locale();
+		$blocksTrans = [];
+
+		$blocks = Block::get()->filter(['Name' => $name])->sort('ID');
+		foreach ($blocks as $key => $block) {
+			$trans = $this->fetchBlockTrans($block, $lang);
+
+			//Fallback to english if there is no translation for language
+			if (count($trans) === 0) {
+				$trans = $this->fetchBlockTrans($block, 'en_US');
+			}
+
+			array_push($blocksTrans, $trans);
+		}
+
+		return new ArrayList($blocksTrans);
 	}
 	
 	//TO-DO

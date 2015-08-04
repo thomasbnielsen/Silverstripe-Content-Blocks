@@ -27,8 +27,7 @@ class InsertBlocks extends BuildTask {
             
             //If page is found, write block
             if (isset($page->ID)) {
-                $block->write();
-                $page->Blocks()->add($block);
+                $block->PageID = $page->ID;
                 $block->write();
 
         		//Loop through all blocks translations, which are defined in block section under 'trans'

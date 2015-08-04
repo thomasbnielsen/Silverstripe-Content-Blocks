@@ -21,23 +21,16 @@ class ContentBlocksModule extends DataExtension {
 	public function updateCMSFields(FieldList $fields) {
 
 		// Relation handler for Blocks		
-		$SConfig = GridFieldConfig_RelationEditor::create(25);
-		$SConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
-		$SConfig->addComponent(new GridFieldDeleteAction());
+		$SConfig = GridFieldConfig_RecordEditor::create(25);
 		
 		// If the copy button module is installed, add copy as option
 		if (class_exists('GridFieldCopyButton')) {
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
 
-		$gridField = new GridField("Blocks", "Content blocks", $this->owner->Blocks(), $SConfig);
-		
-		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
-		
-		if (count($classes) > 1 && class_exists('GridFieldAddNewMultiClass')) {
-			$SConfig->removeComponentsByType('GridFieldAddNewButton');
-			$SConfig->addComponent(new GridFieldAddNewMultiClass());
-		}
+		$blocks = Block::get()->filter(['PageID' => $this->owner->ID]);
+
+		$gridField = new GridField("Blocks", "Content blocks", $blocks, $SConfig);
 		
 		if (self::$create_block_tab) {
 			$fields->addFieldToTab("Root.Blocks", $gridField);

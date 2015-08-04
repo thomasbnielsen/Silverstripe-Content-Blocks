@@ -1,0 +1,6 @@
+.gridfield-button-copy{
+	background: url(../images/document--copy.png) no-repeat 2px 0px !important;
+	display: inline-block; width: 20px; height: 20px; 
+	position: relative;
+	top: 6px;
+}

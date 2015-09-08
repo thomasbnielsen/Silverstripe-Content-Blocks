@@ -69,7 +69,7 @@ class ContentBlocksModule extends DataExtension {
 		$blockTrans = $this->fetchBlockTrans($block, $lang);
 
 		//Fallback to english if there is no translation for language
-		if (count($blockTrans) === 0) {
+		if (count($blockTrans) === 0 || $blockTrans->Title == '') {
 			$blockTrans = $this->fetchBlockTrans($block, 'en_US');
 		}
 

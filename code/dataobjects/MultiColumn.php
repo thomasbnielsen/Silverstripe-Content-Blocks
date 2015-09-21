@@ -20,6 +20,11 @@ class MultiColumn extends Block {
 		'Template' => 'MultiColumn',
 	);
 
+	/* Clean the relation table when deleting a Block */
+	public function onBeforeDelete() {
+		parent::onBeforeDelete();
+		$this->Blocks()->removeAll();
+	}
 	
 	public function getCMSFields() {
 		

@@ -184,6 +184,12 @@ class Block extends DataObject {
 				
 	}
 
+	/* Clean the relation table when deleting a Block */
+	public function onBeforeDelete() {
+		parent::onBeforeDelete();
+		$this->Pages()->removeAll();
+	}
+
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
 		// Run on dev build	- move to module file or why is it here?

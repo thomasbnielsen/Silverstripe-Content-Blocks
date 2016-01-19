@@ -188,6 +188,8 @@ class Block extends DataObject {
 	public function onBeforeDelete() {
 		parent::onBeforeDelete();
 		$this->Pages()->removeAll();
+		$this->Files()->removeAll();
+		$this->Images()->removeAll();
 	}
 
 	function requireDefaultRecords() {

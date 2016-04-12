@@ -64,6 +64,10 @@ class ContentBlocksModule extends DataExtension {
 	function requireDefaultRecords() {
 		parent::requireDefaultRecords();
 		
+		if (!Config::inst()->get('ContentBlocksModule', 'copy_css_to_theme')) {
+			return;
+		}
+		
 		// If css file does not exist on current theme, copy from module
 		$copyfrom = BASE_PATH . "/".CONTENTBLOCKS_MODULE_DIR."/css/block.css";
 		$theme = SSViewer::current_theme();

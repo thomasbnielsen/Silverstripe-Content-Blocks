@@ -11,3 +11,5 @@ LeftAndMain:
     - content-blocks/js/main.js
 GridFieldAddNewMultiClass:
   showEmptyString: false
+ContentBlocksModule:
+  copy_css_to_theme: true

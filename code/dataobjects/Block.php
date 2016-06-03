@@ -166,7 +166,9 @@ class Block extends DataObject {
 		$gridField = new GridField("Pages", "Related pages (This block is used on the following pages)", $this->Pages(), $PagesConfig);
 		
 		$fields->addFieldToTab("Root.Settings", $gridField);
-		
+
+		$this->extend('updateCMSFields', $fields);
+
 		return $fields;
 	}	
 

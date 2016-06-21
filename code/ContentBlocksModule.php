@@ -84,7 +84,9 @@ class ContentBlocksModule extends DataExtension {
 	}	
 	
 	public function contentcontrollerInit($controller) {
-		Requirements::themedCSS('block');
+		if($this->owner->Blocks()->exists()){
+			Requirements::themedCSS('block');
+		}
 	}
 
 	/**

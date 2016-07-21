@@ -16,10 +16,10 @@
 		"issues": "https://github.com/NobrainerWeb/Silverstripe-Content-Blocks/issues"
 	},
 	"require": {
-        "silverstripe/framework": "~3.1",
+		"silverstripe/framework": "~3.1",
 		"silverstripe/cms": "~3.1",
-        "silverstripe-australia/gridfieldextensions": "1.2.*",
-		"bummzack/sortablefile": "1.2.*"
+		"silverstripe-australia/gridfieldextensions": "~1.2",
+		"bummzack/sortablefile": "~1.2"
 	},
 	"suggest": {
 		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations",

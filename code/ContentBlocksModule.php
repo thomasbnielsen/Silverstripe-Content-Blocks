@@ -22,7 +22,9 @@ class ContentBlocksModule extends DataExtension {
 
 		// Relation handler for Blocks		
 		$SConfig = GridFieldConfig_RelationEditor::create(25);
-		$SConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
+        if (class_exists('GridFieldOrderableRows')) {
+            $SConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
+        }
 		$SConfig->addComponent(new GridFieldDeleteAction());
 		
 		// If the copy button module is installed, add copy as option

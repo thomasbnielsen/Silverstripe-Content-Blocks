@@ -16,14 +16,14 @@
 		"issues": "https://github.com/NobrainerWeb/Silverstripe-Content-Blocks/issues"
 	},
 	"require": {
-        "silverstripe/framework": "~3.1",
-		"silverstripe/cms": "~3.1",
-        "silverstripe-australia/gridfieldextensions": "1.2.*",
+        "silverstripe/framework": "3.*",
+		"silverstripe/cms": "3.*",
 		"bummzack/sortablefile": "1.2.*"
 	},
 	"suggest": {
 		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations",
-		"jonom/focuspoint": "Crop an image based on a focus point"
+		"jonom/focuspoint": "Crop an image based on a focus point",
+		"silverstripe-australia/gridfieldextensions": "Sort content blocks"
 	},
 	"extra": {
 		"installer-name": "content-blocks"

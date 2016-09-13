@@ -18,7 +18,7 @@
 	"require": {
         "silverstripe/framework": "3.*",
 		"silverstripe/cms": "3.*",
-		"bummzack/sortablefile": "1.2.*"
+		"bummzack/sortablefile": "~1.2"
 	},
 	"suggest": {
 		"unisolutions/silverstripe-copybutton": "Adds the option to duplicate dataobjects and their relations",

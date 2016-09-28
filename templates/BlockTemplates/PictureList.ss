@@ -11,7 +11,7 @@
 	<% loop Images.Sort('SortOrder') %>
 		<li>
 			<a href="$Me.CroppedFocusedImage(940,700).URL" class="th fancybox cboxElement">
-				$Me.CroppedFocusedImage(300,300)
+				$Top.FormattedBlockImage($ID, 300, 300)
 			</a>
 		</li>
 	<% end_loop %>

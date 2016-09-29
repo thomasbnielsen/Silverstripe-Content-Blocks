@@ -10,14 +10,16 @@ class Block extends DataObject
     //public static $default_sort = 'SortOrder';
 
     private static $db = array(
-        'Name'            => 'Varchar',
+        'Name'            => 'Varchar(255)',
         'Header'          => "Enum('None, h1, h2, h3, h4, h5, h6')",
         'Content'         => 'HTMLText',
         'Link'            => 'Varchar',
         'VideoURL'        => 'Varchar',
         'Template'        => 'Varchar',
         'Active'          => 'Boolean(1)',
-        'ImageCropMethod' => 'Enum("CroppedFocusedImage, SetRatioSize, CroppedImage, Fit, Fill", "CroppedFocusedImage")'
+        'ImageCropMethod' => 'Enum("CroppedFocusedImage, SetRatioSize, CroppedImage, Fit, Fill", "CroppedFocusedImage")',
+        'ContentAsColumns' => 'Boolean(0)',
+        'ExtraCssClasses' => 'Varchar'
     );
 
     private static $many_many = array(
@@ -124,9 +126,10 @@ class Block extends DataObject
             $fields->addFieldToTab("Root.Settings", $globalwarningfield);
         }
 
-        $fields->addFieldsToTab("Root.Main", new TextField('Name', 'Name'));
-        $fields->addFieldsToTab("Root.Main", new DropdownField('Header', 'Use name as header', $this->dbObject('Header')->enumValues()), 'Content');
-        $fields->addFieldsToTab("Root.Main", new HTMLEditorField('Content', 'Content'));
+        $fields->addFieldToTab("Root.Main", new TextField('Name', 'Name'));
+        $fields->addFieldToTab("Root.Main", new DropdownField('Header', 'Use name as header', $this->dbObject('Header')->enumValues()), 'Content');
+        $fields->addFieldToTab("Root.Main", new HTMLEditorField('Content', 'Content'));
+        $fields->addFieldToTab('Root.Main', CheckboxField::create('ContentAsColumns'));
 
         $imgField = new SortableUploadField('Images', 'Images');
         $imgField->allowedExtensions = array('jpg', 'gif', 'png');
@@ -173,8 +176,9 @@ class Block extends DataObject
         }
 
         // Settings tab
-        $fields->addFieldsToTab("Root.Settings", new CheckboxField('Active', 'Active'));
-        $fields->addFieldsToTab("Root.Settings", new TextField('Link', 'Link'));
+        $fields->addFieldToTab("Root.Settings", new CheckboxField('Active', 'Active'));
+        $fields->addFieldToTab("Root.Settings", new TextField('Link', 'Link'));
+        $fields->addFieldToTab("Root.Settings", TextField::create('ExtraCssClasses'));
 
         $PagesConfig = GridFieldConfig_RelationEditor::create(10);
         $PagesConfig->removeComponentsByType('GridFieldAddNewButton');
@@ -312,6 +316,17 @@ class Block extends DataObject
     function file_ext_strip($filename)
     {
         return preg_replace('/\.[^.]*$/', '', $filename);
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtraClasses(){
+        $classes = $this->ExtraCssClasses;
+        if($this->ContentAsColumns){
+            $classes .= ' css-columns';
+        }
+        return $classes;
     }
 
     /**

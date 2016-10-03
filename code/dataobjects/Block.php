@@ -19,12 +19,24 @@ class Block extends DataObject
         'Active'          => 'Boolean(1)',
         'ImageCropMethod' => 'Enum("CroppedFocusedImage, SetRatioSize, CroppedImage, Fit, Fill", "CroppedFocusedImage")',
         'ContentAsColumns' => 'Boolean(0)',
-        'ExtraCssClasses' => 'Varchar'
+        'ExtraCssClasses' => 'Varchar',
+
+        "RedirectionType" => "Enum('Internal,External','Internal')",
+        "ExternalURL" => "Varchar(2083)" // 2083 is the maximum length of a URL in Internet Explorer.
     );
 
     private static $many_many = array(
         'Images' => 'Image',
         'Files'  => 'File'
+    );
+
+    /**
+     * List of one-to-one relationships. {@link DataObject::$has_one}
+     *
+     * @var array
+     */
+    private static $has_one = array(
+        "LinkTo" => "SiteTree"
     );
 
     private static $many_many_extraFields = array(
@@ -38,7 +50,8 @@ class Block extends DataObject
 
     private static $defaults = array(
         'Active'                 => 1,
-        'Page_Blocks[SortOrder]' => 999 // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
+        'Page_Blocks[SortOrder]' => 999, // TODO: Fix sorting, new blocks should be added to the bottom of the list/gridfield
+        "RedirectionType" => "Internal"
     );
 
     public function populateDefaults()
@@ -180,6 +193,29 @@ class Block extends DataObject
         $fields->addFieldToTab("Root.Settings", new TextField('Link', 'Link'));
         $fields->addFieldToTab("Root.Settings", TextField::create('ExtraCssClasses'));
 
+        // taken from RedirectorPage
+        Requirements::javascript(CMS_DIR . '/javascript/RedirectorPage.js');
+        $fields->addFieldsToTab('Root.Settings',
+            array(
+                new HeaderField('RedirectorDescHeader',"Set an external or internal link"),
+                new OptionsetField(
+                    "RedirectionType",
+                    _t('RedirectorPage.REDIRECTTO', "Redirect to"),
+                    array(
+                        "Internal" => _t('RedirectorPage.REDIRECTTOPAGE', "A page on your website"),
+                        "External" => _t('RedirectorPage.REDIRECTTOEXTERNAL', "Another website"),
+                    ),
+                    "Internal"
+                ),
+                new TreeDropdownField(
+                    "LinkToID",
+                    _t('RedirectorPage.YOURPAGE', "Page on your website"),
+                    "SiteTree"
+                ),
+                new TextField("ExternalURL", _t('RedirectorPage.OTHERURL', "Other website URL"))
+            )
+        );
+
         $PagesConfig = GridFieldConfig_RelationEditor::create(10);
         $PagesConfig->removeComponentsByType('GridFieldAddNewButton');
         $gridField = new GridField("Pages", "Related pages (This block is used on the following pages)", $this->Pages(), $PagesConfig);
@@ -189,6 +225,39 @@ class Block extends DataObject
         $this->extend('updateCMSFields', $fields);
 
         return $fields;
+    }
+
+    /**
+     * Return the link that we should redirect to.
+     * Only return a value if there is a legal redirection destination.
+     */
+    public function getInternalExternalLink() {
+        if($this->RedirectionType == 'External') {
+            if($this->ExternalURL) {
+                return $this->ExternalURL;
+            }
+
+        } else {
+            $linkTo = $this->LinkToID ? DataObject::get_by_id("SiteTree", $this->LinkToID) : null;
+
+            if($linkTo) {
+                // We shouldn't point to ourselves - that would create an infinite loop!  Return null since we have a
+                // bad configuration
+                if($this->ID == $linkTo->ID) {
+                    return null;
+
+                    // If we're linking to another redirectorpage then just return the URLSegment, to prevent a cycle of redirector
+                    // pages from causing an infinite loop.  Instead, they will cause a 30x redirection loop in the browser, but
+                    // this can be handled sufficiently gracefully by the browser.
+                } elseif($linkTo instanceof RedirectorPage) {
+                    return $linkTo->regularLink();
+
+                    // For all other pages, just return the link of the page.
+                } else {
+                    return $linkTo->Link();
+                }
+            }
+        }
     }
 
     function onBeforeWrite()

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row $ExtraClasses">
 	<div class="small-12 columns">
 	<% if $Header != "None" %><{$Header}>$Name</{$Header}><% end_if %>
 
@@ -9,6 +9,10 @@
             </a>
         <% end_loop %>
     <% end_if %>
-	$Content
+		<div class="content-wrap">
+			<div class="content">
+				$Content
+			</div>
+		</div>
 	</div>
 </div>

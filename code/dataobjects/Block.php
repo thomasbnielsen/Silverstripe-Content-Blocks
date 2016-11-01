@@ -411,4 +411,15 @@ class Block extends DataObject
 
         return $img->$method($width, $height);
     }
+
+	/**
+	 * Returns the page object (SiteTree) that we are currently on
+	 * Allow us to loop on children of the page and other page related data
+	 *
+	 * @return SiteTree
+	 */
+	public function CurrentPage()
+	{
+		return Director::get_current_page();
+	}
 }

@@ -159,9 +159,13 @@ class Block extends DataObject
 
         // Template tab
         $optionset = array();
-        $theme = SSViewer::current_theme();
-        $src = BASE_PATH . "/themes/" . $theme . "/templates/BlockTemplates/";
-        $imgsrc = "/themes/" . $theme . "/templates/BlockTemplates/";
+        $theme = Config::inst()->get('SSViewer', 'theme');
+        $src = BASE_PATH . "/themes/" . $theme . "/templates/" . CONTENTBLOCKS_MODULE_DIR;
+        $imgsrc = "/themes/" . $theme . "/templates/" . CONTENTBLOCKS_MODULE_DIR;
+        if(!file_exists($src)){
+            $src = BASE_PATH . '/' . CONTENTBLOCKS_MODULE_DIR . '/templates/' . CONTENTBLOCKS_TEMPLATE_DIR . '/';
+            $imgsrc = '/' . CONTENTBLOCKS_MODULE_DIR . '/templates/' . CONTENTBLOCKS_TEMPLATE_DIR . '/';
+        }
 
         // TODO: If ClassName == Block, return the templates of the folder.
         // If ClassName is something else (extension of block) then see if there is a folder with that name and only return templates from this folder
@@ -283,26 +287,6 @@ class Block extends DataObject
         $this->Pages()->removeAll();
         $this->Files()->removeAll();
         $this->Images()->removeAll();
-    }
-
-    function requireDefaultRecords()
-    {
-        parent::requireDefaultRecords();
-        // Run on dev build	- move to module file or why is it here?
-
-        // If templates does not exist on current theme, copy from module
-        $theme = SSViewer::current_theme();
-        $copyto = "../themes/" . $theme . "/templates/" . CONTENTBLOCKS_TEMPLATE_DIR . "/";
-
-        if (!file_exists($copyto)) {
-            $copyfrom = BASE_PATH . "/" . CONTENTBLOCKS_MODULE_DIR . "/templates/" . CONTENTBLOCKS_TEMPLATE_DIR . "/";
-            if (file_exists($copyfrom)) {
-                $this->recurse_copy($copyfrom, $copyto);
-                echo '<li style="color: green">BlockTemplates copied to: ' . $copyto . '</li>';
-            } else {
-                echo "The default template archive was not found: " . $copyfrom;
-            }
-        }
     }
 
     // Should only unlink if a block is on more than one page

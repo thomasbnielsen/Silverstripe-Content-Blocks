@@ -13,3 +13,6 @@ GridFieldAddNewMultiClass:
   showEmptyString: false
 ContentBlocksModule:
   copy_css_to_theme: true
+BlockPage:
+  blocks:
+    - Block

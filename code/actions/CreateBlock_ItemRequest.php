@@ -27,7 +27,7 @@ class CreateBlock_ItemRequest extends GridFieldDetailForm_ItemRequest
      **/
     public function ItemEditForm()
     {
-        $form = parent::ItemEditForm();
+	    $form = parent::ItemEditForm();
         $actions = $form->Actions();
 
         $fields = $this->record->getCMSFields();
@@ -35,6 +35,7 @@ class CreateBlock_ItemRequest extends GridFieldDetailForm_ItemRequest
             $field->setForm($form);
         }
         $form->fields()->removeByName('Name');
+	    $form->fields()->removeByName('Active');
         $form->fields()->removeByName('BlockType');
         $form->fields()->removeByName('BlockStage');
         $form->fields()->removeByName('PageID');
@@ -81,10 +82,11 @@ class CreateBlock_ItemRequest extends GridFieldDetailForm_ItemRequest
         $class = $request->postVar('BlockType');
 
         $block = new $class();
-        $block->PageID = $request->postVar('PageID');
-        $block->write();
+	    $PageID = $request->postVar('PageID');
+	    $page = SiteTree::get_by_id('Page', (int)$PageID);
+        $page->ContentBlocks()->add($block);
 
-        return Controller::curr()->redirect(sprintf('/admin/pages/edit/EditForm/field/Blocks/item/%s/edit', $block->ID));
+        return Controller::curr()->redirect(sprintf('/admin/pages/edit/EditForm/field/ContentBlocks/item/%s/edit', $block->ID));
     }
 
     /**
@@ -96,7 +98,7 @@ class CreateBlock_ItemRequest extends GridFieldDetailForm_ItemRequest
      **/
     public function doAddBlock($data, Form $form)
     {
-        return Controller::curr()->redirect('/admin/pages/edit/EditForm/field/Blocks/item/new');
+        return Controller::curr()->redirect('/admin/pages/edit/EditForm/field/ContentBlocks/item/new');
     }
 
     /**

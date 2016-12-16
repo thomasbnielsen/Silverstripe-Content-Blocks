@@ -9,11 +9,11 @@ class ContentBlocksModule extends DataExtension {
 	private static $has_one = array();
 	
 	private static $many_many = array(
-		'Blocks' => 'Block'
+		'ContentBlocks' => 'ContentBlock'
 	);
 	
 	private static $many_many_extraFields = array(
-        'Blocks' => array(
+        'ContentBlocks' => array(
 			'SortOrder'=>'Int'
 		)
     );
@@ -32,7 +32,7 @@ class ContentBlocksModule extends DataExtension {
 			$SConfig->addComponent(new GridFieldCopyButton(), 'GridFieldDeleteAction');
 		}
 
-		$gridField = new GridField("Blocks", "Content blocks", $this->owner->Blocks(), $SConfig);
+		$gridField = new GridField("ContentBlocks", "Content blocks", $this->owner->ContentBlocks(), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
 
@@ -42,16 +42,10 @@ class ContentBlocksModule extends DataExtension {
 			->setItemRequestClass('CreateBlock_ItemRequest');
 
 		$detail = $gridField->getConfig()->getComponentByType('GridFieldDetailForm');
-
-		$block = new Block();
-		$block->PageID = $this->owner->ID; // this is has_many - we need many_many
-		$this->owner->Blocks()->add($block);
+		$block = new ContentBlock();
+		//$block->PageID = $this->owner->ID; // this is has_many - we need many_many
+		$this->owner->ContentBlocks()->add($block);
 		$detail->setFields($block->getCMSFields());
-
-		if (count($classes) > 1 && class_exists('GridFieldAddNewMultiClass')) {
-			$SConfig->removeComponentsByType('GridFieldAddNewButton');
-			$SConfig->addComponent(new GridFieldAddNewMultiClass());
-		}
 		
 		if (self::$create_block_tab) {
 			$fields->addFieldToTab("Root.Blocks", $gridField);
@@ -67,7 +61,7 @@ class ContentBlocksModule extends DataExtension {
 	}
 
 	public function ActiveBlocks() {
-		return $this->owner->Blocks()->filter(array('Active' => '1'))->sort('SortOrder');
+		return $this->owner->ContentBlocks()->filter(array('Active' => '1'))->sort('SortOrder');
 	}
 	
 	public function OneBlock($id) {

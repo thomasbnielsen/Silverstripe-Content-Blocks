@@ -35,7 +35,19 @@ class ContentBlocksModule extends DataExtension {
 		$gridField = new GridField("Blocks", "Content blocks", $this->owner->Blocks(), $SConfig);
 		
 		$classes = array_values(ClassInfo::subclassesFor($gridField->getModelClass()));
-		
+
+		$gridField->getConfig()
+			->removeComponentsByType('GridFieldAddExistingAutocompleter')
+			->getComponentByType('GridFieldDetailForm')
+			->setItemRequestClass('CreateBlock_ItemRequest');
+
+		$detail = $gridField->getConfig()->getComponentByType('GridFieldDetailForm');
+
+		$block = new Block();
+		$block->PageID = $this->owner->ID; // this is has_many - we need many_many
+		$this->owner->Blocks()->add($block);
+		$detail->setFields($block->getCMSFields());
+
 		if (count($classes) > 1 && class_exists('GridFieldAddNewMultiClass')) {
 			$SConfig->removeComponentsByType('GridFieldAddNewButton');
 			$SConfig->addComponent(new GridFieldAddNewMultiClass());
@@ -107,6 +119,6 @@ class ContentBlocksModule extends DataExtension {
 			$translatedPage->Blocks()->add($block);
 		}
 
-	}	
+	}
 	
 }

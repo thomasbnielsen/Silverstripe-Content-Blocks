@@ -83,7 +83,7 @@ class CreateBlock_ItemRequest extends GridFieldDetailForm_ItemRequest
 
         $block = new $class();
 	    $PageID = $request->postVar('PageID');
-	    $page = SiteTree::get_by_id('Page', (int)$PageID);
+	    $page = SiteTree::get()->byID((int)$PageID);
         $page->ContentBlocks()->add($block);
 
         return Controller::curr()->redirect(sprintf('/admin/pages/edit/EditForm/field/ContentBlocks/item/%s/edit', $block->ID));

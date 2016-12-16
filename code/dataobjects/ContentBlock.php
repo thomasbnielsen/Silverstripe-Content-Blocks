@@ -103,7 +103,7 @@ class ContentBlock extends DataObject
 			->setCustomValidationMessage('Please select a block type'));
 		$fields->push(LiteralField::create(false, '</div">'));
 		$fields->push(HiddenField::create('BlockStage')->setValue('choose'));
-		$fields->push(HiddenField::create('PageID'));
+		$fields->push(HiddenField::create('PageID')->setValue(2)); // TODO: get the right pageID
 
 		return $fields;
 	}

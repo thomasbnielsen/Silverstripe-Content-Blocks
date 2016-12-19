@@ -54,6 +54,16 @@ class Block extends DataObject
         "RedirectionType" => "Internal"
     );
 
+    private static $casting = array(
+        'createStringAsHTML' => 'HTMLText'
+    );
+
+    public function createStringAsHTML($html){
+        $casted = HTMLText::create();
+        $casted->setValue($html);
+        return $casted;
+    }
+
     public function populateDefaults()
     {
         $this->Template = $this->class;
@@ -177,7 +187,7 @@ class Block extends DataObject
                 // Is there a template thumbnail
                 $thumbnail = (file_exists($src . $name . '.png') ? '<img src="' . $imgsrc . $name . '.png" />' : '<img src="' . $imgsrc . 'Blank.png" />'); // TODO: Perhaps just add blank as alt for image, no need to check for existance?
                 $html = '<div class="blockThumbnail">' . $thumbnail . '</div><strong class="title" title="Template file: ' . $filename . '">' . $name . '</strong>';
-                $optionset[$name] = $html;
+                $optionset[$name] = $this->createStringAsHTML($html);
             }
 
             $tplField = OptionsetField::create(

@@ -1,13 +1,13 @@
 ---
-Name: betterbuttons
+Name: content-blocks-betterbuttons
+After:
+  - 'betterbuttons/*'
+Only:
+  classexists: BetterButton
 ---
 BetterButtonsUtils:
-  edit:
-    BetterButtonPrevNextAction: true
+  create:
     BetterButton_New: false
-  versioned_edit:
-    BetterButtonPrevNextAction: true
-    BetterButton_New: true
 
 BetterButtonsActions:
   create:
@@ -16,36 +16,12 @@ BetterButtonsActions:
     BetterButton_SaveAndClose: false
     BetterButton_SaveAndNext: false
     BetterButtonFrontendLinksAction: true
-    BetterButton_Delete: true
+    BetterButton_Delete: false
+    #BetterButtonCancelAction: true #Does not work with add multi class
+
   edit:
     BetterButton_Save: true
     Group_SaveAnd: true
     BetterButton_SaveAndClose: false
     BetterButton_SaveAndNext: false
-    BetterButtonFrontendLinksAction: true
     BetterButton_Delete: true
-
-  versioned_create:
-    BetterButton_SaveDraft: true
-    BetterButton_Publish: true
-
-  versioned_edit:
-    BetterButton_SaveDraft: true
-    BetterButton_Publish: true
-    Group_Versioning: true
-    BetterButton_Delete: true
-    BetterButtonFrontendLinksAction: true
-
-BetterButtonsGroups:
-  SaveAnd:
-    label: Save and...
-    buttons:
-      BetterButton_SaveAndAdd: true
-      BetterButton_SaveAndClose: true
-      BetterButton_SaveAndNext: true
-      BetterButton_SaveAndPrev: true
-  Versioning:
-    label: Versioning...
-    buttons:
-      BetterButton_Rollback: true
-      BetterButton_Unpublish: true

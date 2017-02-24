@@ -48,7 +48,7 @@ class MultiColumn extends Block {
 			
 			$fields->addFieldToTab("Root.Main", $BlockGF);		
 		}
-		
+        $this->extend('updateCMSFields', $fields);
 		return $fields;
 	}
 }

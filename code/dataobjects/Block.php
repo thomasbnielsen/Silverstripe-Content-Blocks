@@ -398,6 +398,8 @@ class Block extends DataObject
 			$classes .= ' css-columns';
 		}
 
+        $this->extend('updateExtraClasses', $classes);
+
 		return $classes;
 	}
 

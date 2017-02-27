@@ -251,35 +251,21 @@ class Block extends DataObject
 	 * Return the link that we should redirect to.
 	 * Only return a value if there is a legal redirection destination.
 	 */
-	public function getInternalExternalLink()
-	{
-		if ($this->RedirectionType == 'External') {
-			if ($this->ExternalURL) {
-				return $this->ExternalURL;
-			}
+    public function getInternalExternalLink()
+    {
+        if ($this->RedirectionType == 'External') {
+            if ($this->ExternalURL) {
+                return $this->ExternalURL;
+            }
 
-		} else {
-			$linkTo = $this->LinkToID ? DataObject::get_by_id("SiteTree", $this->LinkToID) : null;
+        } else {
+            $linkTo = $this->LinkToID ? DataObject::get_by_id("SiteTree", $this->LinkToID) : null;
 
-			if ($linkTo) {
-				// We shouldn't point to ourselves - that would create an infinite loop!  Return null since we have a
-				// bad configuration
-				if ($this->ID == $linkTo->ID) {
-					return null;
-
-					// If we're linking to another redirectorpage then just return the URLSegment, to prevent a cycle of redirector
-					// pages from causing an infinite loop.  Instead, they will cause a 30x redirection loop in the browser, but
-					// this can be handled sufficiently gracefully by the browser.
-				} elseif ($linkTo instanceof RedirectorPage) {
-					return $linkTo->regularLink();
-
-					// For all other pages, just return the link of the page.
-				} else {
-					return $linkTo->Link();
-				}
-			}
-		}
-	}
+            if ($linkTo) {
+                return $linkTo->Link();
+            }
+        }
+    }
 
 	function onBeforeWrite()
 	{

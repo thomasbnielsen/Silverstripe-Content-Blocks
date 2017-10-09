@@ -17,7 +17,7 @@ class Block extends DataObject
 		'VideoURL'         => 'Varchar',
 		'Template'         => 'Varchar',
 		'Active'           => 'Boolean(1)',
-		'ImageCropMethod'  => 'Enum("CroppedFocusedImage, SetRatioSize, CroppedImage, Fit, Fill", "CroppedFocusedImage")',
+		'ImageCropMethod'  => 'Enum("CroppedFocusedImage, Fit, FitMax, Fill, FillMax, ScaleWidth, ScaleMaxWidth, ScaleHeight, ScaleMaxHeight, Pad", "CroppedFocusedImage")',
 		'ContentAsColumns' => 'Boolean(0)',
 		'ExtraCssClasses'  => 'Varchar',
 
